@@ -1,0 +1,21 @@
+start:
+======
+npm run start
+
+
+allow cross site origin:
+=======================
+- npm install cors
+-
+var cors = require('cors');
+app = express();
+app.use(cors());
+
+
+package and install locally:
+===========================
+- npm pack
+- npm install /path_to_tar/filename.tgz 
+(npm install ..\..\n2\services\nress\users\nress-users-1.0.0.tgz)s
+
+
