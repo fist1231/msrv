@@ -14,7 +14,7 @@
   "author": "nress",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.5"
   },
   "dependencies": {
     "cors": "^2.8.4",

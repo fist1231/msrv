@@ -1,3 +1,15 @@
+npm init
+package.json
+
+server.js
+mkdir api, api/controller, api/model, api/routes
+
+npm install --save-dev nodemon
+npm install express --save
+
+mongo db install
+
+\
 start:
 ======
 npm run start
@@ -16,6 +28,25 @@ package and install locally:
 ===========================
 - npm pack
 - npm install /path_to_tar/filename.tgz 
-(npm install ..\..\n2\services\nress\users\nress-users-1.0.0.tgz)s
+(npm install ..\..\n2\services\nress\users\nress-users-1.0.0.tgz)
 
 
+MongoDB:
+=======
+1. install
+2. mkdir c:\mongo\data
+3. "C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath c:\mongo\data
+4. start: "C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe"
+5. Commands:
+db - current db
+show dbs
+use nress_db - switch to db
+
+show collections
+db.getCollectionNames()
+db.users.insertOne( { id: 1, name: "user-1", status: "pending", create_date: Date() } );
+
+db.users.find().pretty()
+
+show users
+show databases
