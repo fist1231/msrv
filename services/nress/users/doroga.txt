@@ -51,10 +51,13 @@ db.users.find().pretty()
 show users
 show databases
 
-Run as service windows:
-=====================
+###########################################################################################################################################################
+=============================
+Run Mongo as service windows:
+=============================
+
 mongod.cfg:
-==========
+~~~~~~~~~~
 
 systemLog:
     destination: file
@@ -64,6 +67,7 @@ storage:
 # network interfaces
 net:
   port: 27017
+  bindIp: 0.0.0.0
 
 # Listen to local and LAN interfaces.
 # bind_ip = 127.0.0.1,192.168.161.100, 192.168.99.101
