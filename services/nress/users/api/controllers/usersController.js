@@ -51,6 +51,17 @@ exports.create_a_user = function(req, res) {
 };
 
 
+exports.find_user = function(req, res) {
+		 console.log('Term not empty: ');
+		  Users.find({'id': req.params.userid}, function(err, user) {
+			    if (err) {
+			    	console.log('find_user error: ' + err);
+			    	return res.send(err);
+			    }
+			    res.json(user);
+			  });
+	};
+
 exports.read_a_user = function(req, res) {
   Users.findById(req.params.userId, function(err, user) {
     if (err) {

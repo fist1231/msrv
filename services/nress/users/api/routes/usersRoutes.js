@@ -21,6 +21,10 @@ module.exports = function(app) {
   app.route('/nress/search/:username')
   .get(usersList.filter_users);
 
+  app.route('/nress/user/:userid')
+  .get(usersList.find_user);
+  
+  
 // app.route('/nress/users/filter')
 // .get(usersList.list_all_users);
 
