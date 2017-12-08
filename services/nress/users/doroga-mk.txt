@@ -1,0 +1,165 @@
+docker:
+=======
+-create server.js
+-create Dockerfile
+docker build -t n1-node:v1 .
+
+
+docker images
+docker ps
+192.168.99.100
+
+docker build -t hello-node:v1 .
+
+docker run -i -t -p 8080:8080 hello-node:v1 /bin/bash
+
+2. another node
+docker build -t bcx-node:v1 .
+docker run -i -t -p 5555:5555 bcx-node:v1 /bin/bash
+
+
+docker registry in docker:
+=========================
+
+docker run -d -p 5000:5000 --name registry registry:2
+docker pull ubuntu
+docker tag ubuntu localhost:5000/myfirstimage
+docker push localhost:5000/myfirstimage
+docker pull localhost:5000/myfirstimage
+docker stop registry && docker rm -v registry
+
+
+docker tag ubuntu localhost:5000/n1-node:v1
+docker push localhost:5000/n1-node:v1
+docker pull localhost:5000/n1-node:v1
+
+
+minikube:
+========
+
+start minikube:
+==============
+minikube status
+
+minikube stop
+minikube start --vm-driver="virtualbox"
+
+minikube start --vm-driver="virtualbox" --insecure-registry="0.0.0.0:5000"
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+
+create deployment:
+
+kubectl delete deployment n1-node
+kubectl run n1-node --image=n1-node:v1 --port=8080
+
+
+
+
+kubectl get pod
+kubectl get deployments
+
+create service:
+
+-expose
+kubectl expose deployment n1-node --type=LoadBalancer
+kubectl get services
+
+-start service:
+minikube service n1-node
+
+http://192.168.99.101:31528/
+
+
+CLUSTER IP:
+===========
+kubectl run n1-5-node --replicas=5 --labels="run=load-balancer-example" --image=n1-node:v1  --port=8080
+-kubectl get deployments n1-5-node
+-kubectl describe deployments n1-5-node
+-kubectl get replicasets
+-kubectl describe replicasets
+
+//kubectl expose deployment n1-5-node --type=LoadBalancer --name=n1-5-service    not working on single minikube
+kubectl expose deployment n1-5-node --type=NodePort --name=n1-5-service
+-kubectl get services n1-5-service
+-kubectl describe services n1-5-service
+
+minikube service n1-5-service
+
+kubectl delete services n1-5-service
+kubectl delete deployment n1-5-node
+
+
+==============================================================================================================================
+
+Docker image users.js:
+======================
+1. docker quickstart shortcut
+2. cd c:/angular/msrv/services/nress/users
+3. docker build -t users-node:v1 .
+4. docker images
+docker ps
+
+5. Test: 
+# docker run -i -t -p 3333:3333 users-node:v1 /bin/bash
+docker run -i -t -p 3333:3333 --network="host" users-node:v1 /bin/bash
+
+remove image
+docker rmi -f users-node:v1
+
+
+$ ip addr show eth0
+
+
+dockerfile from:
+===============
+FROM node:8.9.1
+EXPOSE 3333
+COPY ./ .
+CMD node users.js
+
+to:
+===
+
+
+RUN npm install -g nodemon
+COPY ./script.js /root/script.js
+CMD ["nodemon", "-w", "./users.js", "./users.js"]
+
+
+Move to registry (drop/re-create registry first):
+================================================
+
+docker run -v $(pwd)/data:/tmp/registry-dev --name docker-registry registry:2.0
+
+docker run -p 443:44 -e REGISTRY_HOST="docker-registry" -e REGISTRY_PORT="5000" -e SERVER_NAME="localhost" --link docker-registry:docker-registry 
+
+
+docker stop registry && docker rm -v registry
+docker run -d -p 5000:5000 --name registry registry:2
+docker tag users-node:v1 localhost:5000/users-node:v1
+docker push localhost:5000/users-node:v1
+docker pull localhost:5000/users-node:v1
+
+================
+To kubernetes: (start power shell with admin priv)
+=============
+minikube start --vm-driver="virtualbox" --insecure-registry="0.0.0.0:5000"
+minikube status
+
+kubectl get pod
+kubectl get deployments
+kubectl delete deployment users-node
+
+kubectl create secret docker-registry my-secret --docker-server=127.0.0.1:5000
+ kubectl create secret docker-registry my-secret --docker-server=127.0.0.1:5000 --docker-username=tsa --docker-password=tsatsa7373 --docker-email=tsa@tsa.tsa
+
+1. kubectl run users-node --image=users-node:v1 --port=3333
+
+2. kubectl expose deployment users-node --type=NodePort --name=users-service
+kubectl delete services/users-service
+kubectl delete deployment users-node
+
+3. minikube service users-service
+
+
+

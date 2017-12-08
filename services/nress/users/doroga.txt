@@ -50,3 +50,28 @@ db.users.find().pretty()
 
 show users
 show databases
+
+Run as service windows:
+=====================
+mongod.cfg:
+==========
+
+systemLog:
+    destination: file
+    path: c:\mongo\data\log\mongod.log
+storage:
+    dbPath: c:\mongo\data\db
+# network interfaces
+net:
+  port: 27017
+
+# Listen to local and LAN interfaces.
+# bind_ip = 127.0.0.1,192.168.161.100, 192.168.99.101
+
+"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --config "C:\Program Files\MongoDB\Server\3.6\mongod.cfg" --install --serviceName "MongoDB"
+to remove:
+"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --remove
+
+
+net start MongoDB
+net stop MongoDB
