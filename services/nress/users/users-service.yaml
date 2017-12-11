@@ -1,0 +1,30 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2017-12-10T08:05:33Z
+  labels:
+    run: users-node
+  name: users-service
+  namespace: default
+  resourceVersion: "7652"
+  selfLink: /api/v1/namespaces/default/services/users-service
+  uid: e598e926-dd80-11e7-95ad-080027b28405
+spec:
+  clusterIP: 10.107.116.95
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 30493
+    port: 3333
+    protocol: TCP
+    targetPort: 3333
+    nodePort: 31234
+  selector:
+    run: users-node
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

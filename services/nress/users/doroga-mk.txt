@@ -340,11 +340,177 @@ docker images
 
 docker build -t users-node:v1 .
 kubectl run users-node --replicas=5 --image=users-node:v1 --port=3333
+
+sudo kubectl run users-node --replicas=5 --image=users-node:v1 --port=3333 --env="DOMAIN=cluster"
+
 kubectl get pod
+
+or for own port goto 2:
+
 kubectl expose deployment users-node --type=NodePort --name=users-service
+// kubectl expose deployment users-node --type=LoadBalancer --name=users-service
 kubectl get service
 
 users-service   NodePort    10.103.136.109   <none>        3333:31367/TCP   12s
 
 http://192.168.99.103:31367/nress/users
+
+kubectl get namespaces
+$ curl $(minikube service users-node --url)
+
+kubectl describe services users-service
+kubectl cluster-info
+
+2:
+==
+get yaml:
+kubectl edit svc users-service
+add nodePort: 31234  (range: The range of valid ports is 30000-32767)
+
+save as users-service.yaml
+
+kubectl delete service users-service
+
+kubectl create -f users-service.yaml
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+====================== Ubuntu 17.04 kubernetes ==================================
+1. Install dependency library
+sudo apt-get update 
+sudo apt-get install -y apt-transport-https
+
+2. Docker:
+sudo apt install docker.io
+
+Docker is enabled upon boot:
+sudo systemctl enable docker.service
+
+Once that completes, start and enable the Docker service with the commands
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+3. Install Kubernetes:
+
+- Add key for new repository and add repository
+sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add 
+
+- creating the file /etc/apt/sources.list.d/kubernetes.list and enter the following content:
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+Save and close that file. Install Kubernetes with the following commands:
+
+- install kubernetes
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+
+- Initialize your master
+With everything installed, go to the machine that will serve as the Kubernetes master and issue the command:
+
+(sudo kubeadm reset)
+sudo swapoff -a
+sudo kubeadm init
+
+or
+
+Didn't work:
+# echo 'Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"' > /etc/systemd/system/kubelet.service.d/90-local-extras.conf
+# systemctl daemon-reload
+# systemctl restart kubelet
+
+/healthz: dial tcp 127.0.0.1:10255: getsockopt: connection refused.
+
+sudo ufw status
+
+Didn't work: 
+// sudo nano /etc/default/ufw
+// DEFAULT_FORWARD_POLICY="DROP"
+// to
+// DEFAULT_FORWARD_POLICY="ACCEPT"
+// sudo ufw reload
+
+Didn't work:
+// sudo ufw disable
+// sudo ufw enable
+
+sudo kubeadm reset
+add "Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"" to /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+sudo kubeadm init --skip-preflight-checks
+or kubeadm init --node-name master
+
+//////////////////////////////////////////////////////////////////////////////////
+[kubeadm] WARNING: kubeadm is in beta, please do not use it for production clusters.
+[init] Using Kubernetes version: v1.8.5
+[init] Using Authorization modes: [Node RBAC]
+[preflight] Skipping pre-flight checks
+[kubeadm] WARNING: starting in 1.8, tokens expire after 24 hours by default (if you require a non-expiring token use --token-ttl 0)
+[certificates] Generated ca certificate and key.
+[certificates] Generated apiserver certificate and key.
+[certificates] apiserver serving cert is signed for DNS names [tsa-ubt kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.1.208]
+[certificates] Generated apiserver-kubelet-client certificate and key.
+[certificates] Generated sa key and public key.
+[certificates] Generated front-proxy-ca certificate and key.
+[certificates] Generated front-proxy-client certificate and key.
+[certificates] Valid certificates and keys now exist in "/etc/kubernetes/pki"
+[kubeconfig] Wrote KubeConfig file to disk: "admin.conf"
+[kubeconfig] Wrote KubeConfig file to disk: "kubelet.conf"
+[kubeconfig] Wrote KubeConfig file to disk: "controller-manager.conf"
+[kubeconfig] Wrote KubeConfig file to disk: "scheduler.conf"
+[controlplane] Wrote Static Pod manifest for component kube-apiserver to "/etc/kubernetes/manifests/kube-apiserver.yaml"
+[controlplane] Wrote Static Pod manifest for component kube-controller-manager to "/etc/kubernetes/manifests/kube-controller-manager.yaml"
+[controlplane] Wrote Static Pod manifest for component kube-scheduler to "/etc/kubernetes/manifests/kube-scheduler.yaml"
+[etcd] Wrote Static Pod manifest for a local etcd instance to "/etc/kubernetes/manifests/etcd.yaml"
+[init] Waiting for the kubelet to boot up the control plane as Static Pods from directory "/etc/kubernetes/manifests"
+[init] This often takes around a minute; or longer if the control plane images have to be pulled.
+[apiclient] All control plane components are healthy after 36.502629 seconds
+[uploadconfig] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+[markmaster] Will mark node tsa-ubt as master by adding a label and a taint
+[markmaster] Master tsa-ubt tainted and labelled with key/value: node-role.kubernetes.io/master=""
+[bootstraptoken] Using token: 48fc6f.fd4313ca8539efc7
+[bootstraptoken] Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstraptoken] Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstraptoken] Configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstraptoken] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
+[addons] Applied essential addon: kube-dns
+[addons] Applied essential addon: kube-proxy
+
+Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run (as a regular user):
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  http://kubernetes.io/docs/admin/addons/
+
+You can now join any number of machines by running the following on each node
+as root:
+
+  kubeadm join --token 48fc6f.fd4313ca8539efc7 192.168.1.208:6443 --discovery-token-ca-cert-hash sha256:4b4027ed823e14f7adf46ec57fd1f731d0485354ee51735ddacb75e319106f6a
+/////////////////////////////////////////////////////////////////////////////////
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+
+6. Deploying a pod network, Flannel
+
+- sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+7. Enable master node run pod [optional]
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+sudo kubectl get pods
+kubectl cluster-info
+https://192.168.1.208:6443/api/v1/namespaces/kube-system/services/kube-dns/proxy
 
