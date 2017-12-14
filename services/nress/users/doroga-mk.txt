@@ -347,7 +347,7 @@ kubectl get pod
 
 or for own port goto 2:
 
-kubectl expose deployment users-node --type=NodePort --name=users-service
+kubectl expose  users-node --type=NodePort --name=users-service
 // kubectl expose deployment users-node --type=LoadBalancer --name=users-service
 kubectl get service
 
@@ -568,4 +568,63 @@ etcdctl del "" --prefix
 docker build -t users-node:v1 .	
 sudo kubectl run users-node --replicas=5 --image=users-node:v1 --port=3333
 
-SU
+===============================================================================================================================================================================
+
+Certs for secure registry:
+
+Docker:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ mkdir -p certs
+
+$ openssl req \
+  -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key \
+  -x509 -days 365 -out certs/domain.crt
+Be sure to use the name ubt-master (master node machine name) as a CN.
+
+Copy /certs/domain.crt to all nodes oon the cluster:
+sudo scp ~/certs/domain.crt username@ubt-node1:/etc/docker/certs.d/ubt-master:443/domain.crt
+create certs.d/ubt-master:443, if missing. No restart necessary
+
+#Stop the registry if it is currently running.
+$ docker stop registry
+
+docker run -d \
+  --restart=always \
+  --name registry \
+  -v `pwd`/certs:/certs \
+  -e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+  -p 443:443 \
+  registry:2
+
+sudo docker tag users-node:v1 ubt-master:443/users-node:v1
+sudo docker push ubt-master:443/users-node:v1
+
+
+To clear:
+*********
+sudo docker ps -a | less
+sudo docker rm -f <registry id>
+
+sudo docker images
+sudo docker rmi -f <image_ids>
+sudo docker rmi -f registry:2
+******************************
+
+sudo kubectl run users-node --replicas=5 --image=ubt-master:443/users-node:v1 --port=3333
+sudo kubectl get pods
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nginx:
+kubectl create deployment nginx --image=nginx
+kubectl create service nodeport nginx --tcp=80:80
+
+kubectl expose deployment users-node --type=NodePort --name=users-service
+
+kubectl get svc
+curl kube-worker-1:32555
+
+
+
+
