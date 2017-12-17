@@ -1,6 +1,6 @@
 docker:
 =======
-###########################################################################################################################################################
+##########################################  Docker   ###########################################################
 
 $ docker network ls
 $ docker run --network=<NETWORK>
@@ -84,14 +84,9 @@ docker rmi -f registry
 docker rmi -f registry:2
 
 
-
-###########################################################################################################################################################
-
 -create server.js
 -create Dockerfile
 docker build -t n1-node:v1 .
-
-
 
 
 docker images
@@ -122,6 +117,9 @@ docker tag ubuntu localhost:5000/n1-node:v1
 docker push localhost:5000/n1-node:v1
 docker pull localhost:5000/n1-node:v1
 
+
+
+##########################################  Minikube   ###########################################################
 
 minikube:
 ========
@@ -376,9 +374,7 @@ kubectl create -f users-service.yaml
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##########################################  Kubernetes Cluster   ###########################################################
 
 https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network
 
@@ -518,6 +514,8 @@ Not working.
 6. Deploying a pod network, Flannel
 
 - kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+
+kubectl apply -f https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
 
 7. Enable master node run pod [optional]
 kubectl taint nodes --all node-role.kubernetes.io/master-
