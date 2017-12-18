@@ -6,5 +6,7 @@ RUN echo installing rxjs
 RUN npm install rxjs
 RUN echo installing cors
 RUN npm install cors
+RUN echo installing express
+RUN npm install express
 COPY ./ .
 CMD ["nodemon", "-w", "./users.js", "./users.js"]
