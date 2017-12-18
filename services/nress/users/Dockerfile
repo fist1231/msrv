@@ -8,5 +8,7 @@ RUN echo installing cors
 RUN npm install cors
 RUN echo installing express
 RUN npm install express
+RUN echo installing mongoose
+RUN npm install mongoose
 COPY ./ .
 CMD ["nodemon", "-w", "./users.js", "./users.js"]
