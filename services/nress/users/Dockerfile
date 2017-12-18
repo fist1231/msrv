@@ -4,5 +4,7 @@ RUN echo installing nodemon
 RUN npm install -g nodemon
 RUN echo installing rxjs
 RUN npm install rxjs
+RUN echo installing cors
+RUN npm install cors
 COPY ./ .
 CMD ["nodemon", "-w", "./users.js", "./users.js"]
