@@ -1,0 +1,6 @@
+apps:
+  - script   : 'users.js'
+    name     : 'USERS-nODE'
+    exec_mode: 'FORK'
+    instances: 1
+  
