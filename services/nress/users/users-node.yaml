@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: users-node
+  name: users-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: users-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: users-node
+    spec:
+      containers:
+      - image: kube-master1:443/users-node:v1
+        name: users-node
+        imagePullPolicy: Always
+        resources: {}
+status: {}

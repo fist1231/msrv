@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx2-config
+  namespace: default
+data:
+  nginx2-conf.conf: |
+    upstream users-ng {
+      server 10.215.172.145:30333;
+      server 10.215.172.21:30333;
+    }
+    server {
+      listen 8080;
+      location /gateway {
+        proxy_pass http://users-ng;
+      }
+    }
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx2
+  name: nginx2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx2
+    spec:
+      containers:
+      - image: nginx:1.13.7
+        name: nginx2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: nginx2-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx2-conf
+        configMap:
+          name: nginx2-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: nginx2
+    name: nginx2-svc
+  name: nginx2-svc
+spec:
+  ports:
+  - nodePort: 32100
+    # The port that this service should serve on.
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 32100
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: nginx2
+  type: NodePort
