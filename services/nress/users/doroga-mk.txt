@@ -420,6 +420,8 @@ nameserver 8.8.4.4
 sudo resolvconf -u
 will add to /etc/resolv.conf
 
+sudo service resolvconf restart
+
 - Add key for new repository and add repository
 sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add 
 
