@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: users-node-ingress
+spec:
+ rules:
+   - host: users-node
+     http:
+       paths:
+         - path: /
+           backend:
+             serviceName: users-node-service
+             servicePort: 3333

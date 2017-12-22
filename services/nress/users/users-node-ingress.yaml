@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: users-node-rc
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: users-node
+    spec:
+      containers:
+      - image: kube-master1:443/users-node:v1
+        name: users-node
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3333
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-node-svc
+  labels:
+    app: users-node
+spec:
+  ports:
+  - port: 3333
+    protocol: TCP
+    targetPort: 3333
+    name: http
+  selector:
+    app: users-node
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: users-node-ingress
+spec:
+  tls:
+  - hosts:
+    - tsa.tsa.com
+  rules:
+  - host: tsa.tsa.com
+    http:
+      paths:
+      - path: /usr
+        backend:
+          serviceName: users-node-svc
+          servicePort: 3333

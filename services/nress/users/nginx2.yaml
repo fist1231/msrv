@@ -11,7 +11,7 @@ data:
     }
     server {
       listen 8080;
-      location /gateway {
+      location / {
         proxy_pass http://users-ng;
       }
     }
