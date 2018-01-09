@@ -43,7 +43,11 @@ npm i --save-dev chai
 npm i --save-dev sinon
 npm i --save-dev sinon-chai
 npm i --save-dev babel-register
+npm i --save-dev chai-http
+npm install --save-dev chai-subset
 
 or
 
 npm i --save-dev mocha chai sinon sinon-chai babel-register
+
+npm run test-server

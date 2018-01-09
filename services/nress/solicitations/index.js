@@ -23,7 +23,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 
 //bodyParser = require('body-parser');
 
-var app = express(),
+export const app = express(),
   port = process.env.PORT || 3334,
   mongoose = require('mongoose'),
   Solz = require('./api/models/solicitationsModel'), //created model loading here
