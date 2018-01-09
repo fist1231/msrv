@@ -15,20 +15,22 @@ import cors from 'cors';
 //const express = require('express');
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import  bodyParser  from 'body-parser';
+//import  bodyParser  from 'body-parser';
 
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import { Solicitations } from './api/models/solicitationsModel'; //created model loading here
 import { makeExecutableSchema } from 'graphql-tools';
 
 //bodyParser = require('body-parser');
 
-const port = process.env.PORT || 3334;
-
-const app = express();
-
+var app = express(),
+  port = process.env.PORT || 3334,
+  mongoose = require('mongoose'),
+  Solz = require('./api/models/solicitationsModel'), //created model loading here
+  bodyParser = require('body-parser');
 
 app.use(cors());
+
 
 // GraphQL
 //const {graphqlExpress} = require('apollo-server-express');

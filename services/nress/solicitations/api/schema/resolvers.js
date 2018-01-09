@@ -1,6 +1,23 @@
 import { list_all_solicitations } from '../controllers/solicitationsController';
+import Solicitations from '../models/solicitationsModel';
+//const Solicitations = require('../models/solicitationsModel');
 
 // app/src/resolvers.js
+const solicitationList = () => {
+    return new Promise((resolve, reject) => {
+        Solicitations.find((err, solicitations) => {
+            if (err) {
+              console.log('^^^^^ Error: ' + err);
+              reject(err);
+            } else {
+              console.log('^^^^^ solicitations: ' + solicitations);
+              resolve(solicitations);
+            }
+        })
+    })
+};
+
+
 
 const sols = [
   {
@@ -16,7 +33,7 @@ const sols = [
 ];
 
 const resolvers  = {
-  Query: { solicitations: () => list_all_solicitations() },
+  Query: { solicitations: () => solicitationList() },
 };
 
 //let nextId = 3;

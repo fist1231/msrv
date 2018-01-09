@@ -36,3 +36,14 @@ add package.json scripts:
 },
 
 npm uninstall express-graphql --save
+
+Testing:
+npm i --save-dev mocha
+npm i --save-dev chai
+npm i --save-dev sinon
+npm i --save-dev sinon-chai
+npm i --save-dev babel-register
+
+or
+
+npm i --save-dev mocha chai sinon sinon-chai babel-register
