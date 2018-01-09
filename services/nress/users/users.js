@@ -14,8 +14,11 @@ app.use(cors());
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-//mongoose.connect('mongodb://localhost/nress_db'); 
-mongoose.connect('mongodb://192.168.56.1:27017/nress_db'); 
+//mongoose.connect('mongodb://localhost/nress_db');
+mongoose.connect('mongodb://192.168.56.1:27017/nress_db', {
+  useMongoClient: true
+});
+ 
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,18 +36,18 @@ app.listen(port);
 
 
 exports.getUsers = function() {
-	
+
 	var users = [{id: '101', name: 'name-1010', status: 'fake', created_date: new Date()}
 	, {id: '102', name: 'name-102', status: 'fake', created_date: new Date()}
 	, {id: '103', name: 'name-103', status: 'fake', created_date: new Date()}];
-	
-	
+
+
 	app.get('/dowork',function(res,req){
 	    console.log(req.params.msg);
 	  /... code to do your work .../
 	});
-	
-	
+
+
 	return Rx.Observable.of(users);
 }
 

@@ -51,6 +51,21 @@ db.users.find().pretty()
 show users
 show databases
 
+db.collection.remove()
+db.collection.drop()
+
+db.solicitations.insertOne( { id: 1, number: "NN01TSANPM2901", acronym: "acronym-1", title: "Solicitation Title 1", fiscal_year: 2011, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 2, number: "NN01TSANPM2902", acronym: "acronym-2", title: "Solicitation Title 2", fiscal_year: 2012, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 3, number: "NN01TSANPM2903", acronym: "acronym-3", title: "Solicitation Title 3", fiscal_year: 2013, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 4, number: "NN01TSANPM2904", acronym: "acronym-4", title: "Solicitation Title 4", fiscal_year: 2014, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 5, number: "NN01TSANPM2905", acronym: "acronym-5", title: "Solicitation Title 5", fiscal_year: 2015, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 6, number: "NN01TSANPM2906", acronym: "acronym-6", title: "Solicitation Title 6", fiscal_year: 2016, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 7, number: "NN01TSANPM2907", acronym: "acronym-7", title: "Solicitation Title 7", fiscal_year: 2017, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 8, number: "NN01TSANPM2908", acronym: "acronym-8", title: "Solicitation Title 8", fiscal_year: 2018, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 9, number: "NN01TSANPM2909", acronym: "acronym-9", title: "Solicitation Title 9", fiscal_year: 2019, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 10, number: "NN01TSANPM2910", acronym: "acronym-10", title: "Solicitation Title 10", fiscal_year: 2020, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+db.solicitations.insertOne( { id: 11, number: "NN01TSANPM29011", acronym: "acronym-11", title: "Solicitation Title 11", fiscal_year: 2021, preview_date: Date(), selection_date: Date(), release_date: Date(), close_date: Date() } );
+
 ###########################################################################################################################################################
 =============================
 Run Mongo as service windows:

@@ -1,0 +1,38 @@
+npm init
+npm install lodash --save
+npm install express --save
+npm install mongoose --save
+npm install body-parser --save
+
+npm i rxjs --save
+
+//npm i express-graphql graphql graphql-tools --save
+//npm install --save graphql graphql-tools apollo-server-express
+npm install --save apollo-server-express graphql-tools graphql express body-parser
+
+//npm i graphql-tools --save-dev
+
+// Not needed
+# npm install express-generator -g
+
+npm i --save-dev nodemon
+npm i cors --save
+
+npm install pm2 -g
+
+//npm install --save-dev babel-cli babel-preset-env
+npm install -save-dev babel-cli babel-preset-es2015
+
+add .bablerc
+{
+  "presets": ["env"]
+}
+
+add package.json scripts:
+"scripts": {
+  "start": "nodemon --exec babel-node --presets=es2015 -- index.js",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "babel-node": "babel-node --presets=es2015"
+},
+
+npm uninstall express-graphql --save
