@@ -51,3 +51,14 @@ or
 npm i --save-dev mocha chai sinon sinon-chai babel-register
 
 npm run test-server
+
+
+=================== Deployment to k8s ==================
+npm install pm2 -save
+create Dockerfile
+create process.yml
+create service and deployment yamls
+
+sudo docker build -t solicitations-node:v1 .
+sudo docker tag solicitations-node:v1 ubt-master:443/solicitations-node:v1
+sudo docker push ubt-master:443/solicitations-node:v1
