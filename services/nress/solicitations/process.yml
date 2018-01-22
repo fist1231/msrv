@@ -1,0 +1,6 @@
+apps:
+  - script   : 'index.js'
+    name     : 'Solicitations-Node'
+    exec_mode: 'FORK'
+    instances: 1
+  

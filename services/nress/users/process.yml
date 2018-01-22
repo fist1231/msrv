@@ -1,6 +1,6 @@
 apps:
   - script   : 'users.js'
-    name     : 'USERS-nODE'
+    name     : 'Users-Node'
     exec_mode: 'FORK'
     instances: 1
   
