@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: -node
+    run: solicitations-node
   name: solicitations-node
 spec:
   replicas: 3

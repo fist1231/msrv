@@ -59,6 +59,23 @@ create Dockerfile
 create process.yml
 create service and deployment yamls
 
+Docker:
+======
 sudo docker build -t solicitations-node:v1 .
 sudo docker tag solicitations-node:v1 ubt-master:443/solicitations-node:v1
 sudo docker push ubt-master:443/solicitations-node:v1
+
+K8s:
+====
+cd  ./deploy
+kubectl create -f solicitations-node.yaml
+kubectl create -f solicitations-node-service.yaml
+
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
+Firewall:
+========
+Regular cmd (not admin)
+.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "solicitations:tcp:[]:30334:[10.0.2.5]:30334"
