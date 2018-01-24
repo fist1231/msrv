@@ -79,3 +79,43 @@ Firewall:
 ========
 Regular cmd (not admin)
 .\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "solicitations:tcp:[]:30334:[10.0.2.5]:30334"
+
+
+Prod build:
+===========
+
+mkdir ./build
+del -r build/*
+
+npm install --save-dev babel-preset-es3
+npm install --save-dev babel-preset-es2015-mod
+npm install --save-dev babel-plugin-transform-runtime
+npm install babel-plugin-uglify --save-dev
+npm uninstall babel-plugin-uglify --save-dev
+
+Add to .bablerc:
+================
+"ignore": ["**/*.test.js", "node_modules"]
+
+Add to package.json:
+====================
+//"prebuild": "rm -rf build/*",
+//"prebuild": "del /r /f /q build"  // cmd
+"prebuild": "del -R -Force -Path build && mkdir build",  // powershell
+"build": "babel --minified=true --presets=es2015 . -d ./build -s",
+"prestart": "npm build",
+//"start-prod": "NODE_ENV=production node ./build/index.js" - not working
+
+
+npm run build
+
+start:
+node ./build/index.js
+
+pm2 start:
+=========
+pm2 start ./build/index.js
+pm2 list
+pm2 stop ./build/index.js
+pm2 delete $id
+pm2 kill
