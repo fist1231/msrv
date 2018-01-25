@@ -3,3 +3,4 @@ apps:
     name     : 'Solicitations-Node'
     exec_mode: 'FORK'
     instances: 1
+    watch: false
