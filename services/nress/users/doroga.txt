@@ -27,7 +27,7 @@ app.use(cors());
 package and install locally:
 ===========================
 - npm pack
-- npm install /path_to_tar/filename.tgz 
+- npm install /path_to_tar/filename.tgz
 (npm install ..\..\n2\services\nress\users\nress-users-1.0.0.tgz)
 
 
@@ -94,3 +94,22 @@ to remove:
 
 net start MongoDB
 net stop MongoDB
+
+
+
+Docker:
+======
+sudo docker build -t users-node:v1 .
+sudo docker tag users-node:v1 ubt-master:443/users-node:v1
+sudo docker push ubt-master:443/users-node:v1
+
+K8s:
+====
+cd  ./config
+//kubectl create -f users-node.yaml
+export DNAME="ubt-master" && envsubst < users-node.yaml | kubectl create -f -
+kubectl create -f user-node-service.yaml
+
+kubectl get pods
+kubectl get deployments
+kubectl get service

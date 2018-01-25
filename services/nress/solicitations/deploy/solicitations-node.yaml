@@ -18,7 +18,7 @@ spec:
         run: solicitations-node
     spec:
       containers:
-      - image: ubt-master:443/solicitations-node:v1
+      - image: $DNAME:443/solicitations-node:v1
         name: solicitations-node
         imagePullPolicy: Always
         resources: {}

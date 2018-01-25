@@ -18,7 +18,7 @@ spec:
         run: users-node
     spec:
       containers:
-      - image: kube-master1:443/users-node:v1
+      - image: $DNAME:443/users-node:v1
         name: users-node
         imagePullPolicy: Always
         resources: {}
