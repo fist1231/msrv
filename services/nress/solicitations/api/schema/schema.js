@@ -19,7 +19,7 @@
 // Define your types here.
 const schema = `
   type Query { solicitations: [Solicitation] }
-  type Solicitation { acronym: String, title: String }
+  type Solicitation { id: String, acronym: String, title: String }
 `;
 
 /*
