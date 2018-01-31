@@ -17,6 +17,21 @@ const solicitationList = () => {
     })
 };
 
+const getSolicitationsById = (id) => {
+  console.log('$$$$$$$$ id: ' + id);
+    return new Promise((resolve, reject) => {
+        Solicitations.find({'acronym': new RegExp('.*' + id + '.*', "i")}, (err, solicitations) => {
+            if (err) {
+              console.log('^^^^^ Error: ' + err);
+              reject(err);
+            } else {
+              console.log('^^^^^ id: ' + id);
+              resolve(solicitations);
+            }
+        })
+    })
+};
+
 
 
 const sols = [
@@ -33,7 +48,15 @@ const sols = [
 ];
 
 const resolvers  = {
-  Query: { solicitations: () => solicitationList() },
+  Query: {
+    solicitations: () => solicitationList(),
+    solicitationsById: (_, { filter }) => getSolicitationsById(filter),
+  },
+  // Solicitation: {
+  //   id(id) {
+  //     return solicitations.find(sol => sol.id === id);
+  //   },
+  // },
 };
 
 //let nextId = 3;

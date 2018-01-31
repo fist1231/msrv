@@ -18,8 +18,11 @@
 
 // Define your types here.
 const schema = `
-  type Query { solicitations: [Solicitation] }
-  type Solicitation { id: String, acronym: String, title: String }
+  type Query {
+    solicitations: [Solicitation],
+    solicitationsById(filter: String, first: Int): [Solicitation]
+  }
+  type Solicitation { id: String!, acronym: String!, title: String! }
 `;
 
 /*
