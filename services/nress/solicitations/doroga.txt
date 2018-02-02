@@ -112,6 +112,8 @@ Add to package.json:
 
 npm run build
 
+sudo cp -a ./config/. ./build/config/.
+
 start:
 node ./build/index.js
 
