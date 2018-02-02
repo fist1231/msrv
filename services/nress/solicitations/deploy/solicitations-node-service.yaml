@@ -9,7 +9,7 @@ spec:
   ports:
   - nodePort: 30334
     # The port that this service should serve on.
-    port: 33334
+    port: 3334
     protocol: TCP
     targetPort: 3334
     nodePort: 30334

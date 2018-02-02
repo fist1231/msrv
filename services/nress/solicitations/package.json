@@ -10,7 +10,7 @@
     "test-server": "mocha --exit --compilers js:babel-core/register ./tests/**/*.test.js",
     "babel-node": "babel-node --presets=es2015",
     "prebuild": "",
-    "build": "babel . -d ./build -s",
+    "build": "babel . -d ./build -s && mkdir \"build/config\" && copy \"config/.\" \"build/config\"",
     "prestart": "npm build",
     "start-prod": "NODE_ENV=production node ./build/index.js"
   },

@@ -113,3 +113,11 @@ kubectl create -f user-node-service.yaml
 kubectl get pods
 kubectl get deployments
 kubectl get service
+
+
+Spinoff:
+=======
+kubectl delete service users-node-service
+kubectl delete deployment users-node
+
+sudo docker rmi pod-name-id

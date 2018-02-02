@@ -17,4 +17,5 @@ COPY ./ .
 # CMD ["pm2", "start", "./users.js"]
 # CMD ["pm2-docker", "app.js"]
 #CMD ["pm2-docker", "--json", "process.yml"]
-CMD ["pm2-runtime", "--json", "process.yml"]
+#CMD ["pm2-runtime", "--json", "process.yml"]
+CMD ["node", "users.js"]

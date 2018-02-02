@@ -122,3 +122,12 @@ pm2 list
 pm2 stop ./build/index.js
 pm2 delete $id
 pm2 kill
+
+
+Spinoff:
+=======
+kubectl delete service solicitations-node-service
+kubectl delete deployment solicitations-node
+
+sudo docker rmi solicitations-node:v1
+sudo docker rmi ubt-master:443/solicitations-node:v1
