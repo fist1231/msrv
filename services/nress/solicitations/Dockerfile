@@ -1,5 +1,5 @@
 FROM node:8.9.1
-EXPOSE 3333
+EXPOSE 3334
 # RUN echo installing nodemon
 # RUN npm install -g nodemon
 RUN echo installing pm2
