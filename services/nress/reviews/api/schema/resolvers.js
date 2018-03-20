@@ -50,7 +50,7 @@ const getReviewProposalsById = (id) => {
           // maxRows value.  For the complete list of other options see
           // the documentation.
           { resultSet: false
-            , maxRows: 100
+            , maxRows: 10000
             , outFormat: oracledb.OBJECT  // query result format
             //, extendedMetaData: true      // get extra metadata
             //, fetchArraySize: 100         // internal buffer allocation size for tuning
@@ -94,7 +94,7 @@ const getReviewProposalsById = (id) => {
             }
         })
     })
-*/    
+*/
 };
 
 const reviewProposalList = () => {
