@@ -22,7 +22,7 @@ const schema = `
     reviewProposals: [ReviewProposal],
     reviewProposalsById(filter: String, first: Int): [ReviewProposal]
   }
-  type ReviewProposal { ASSIGNED_RESPONSE_ID: String!, UPLOADED_BY: String, UPLOADED_DATE: String }
+  type ReviewProposal { ASSIGNED_RESPONSE_ID: String!, FIRST_NAME: String, LAST_NAME: String, RESPONSE_NUMBER: String, RESPONSE_SEQ_NUMBER: String, PSTATE: String}
 `;
 
 /*

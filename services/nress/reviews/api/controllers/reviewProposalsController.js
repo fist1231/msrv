@@ -1,5 +1,7 @@
 'use strict';
 
+import config from '../../config/config.json'
+
 var mongoose = require('mongoose'),
 ReviewProposals = mongoose.model('Solicitations');
 
@@ -104,9 +106,9 @@ exports.list_all_reviewProposals = function(req, res) {
 
   oracledb.getConnection(
     {
-      user          : "nspires4",
-      password      : "nspires4",
-      connectString : "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 172.17.9.24)(PORT = 1521)))(CONNECT_DATA = (SID = ndevdb)(SRVR = DEDICATED)))"
+      user          : config.ora_usr,
+      password      : config.ora_pwd,
+      connectString : config.ora_connect
     },
     function(err, connection)
     {
