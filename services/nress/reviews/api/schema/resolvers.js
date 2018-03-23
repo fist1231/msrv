@@ -46,7 +46,7 @@ const getReviewProposalsById = (id) => {
            query,
 
           // The "bind value" 180 for the bind variable ":id"
-          ['2C9E834A2F5ED5E7012F9D7AAA511934'],
+          ['2C90DAA619C4B4700119C4B831920002'],
           // execute() options argument.  Since the query only returns one
           // row, we can optimize memory usage by reducing the default
           // maxRows value.  For the complete list of other options see
