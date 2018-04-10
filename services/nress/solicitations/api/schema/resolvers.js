@@ -20,7 +20,7 @@ const solicitationList = () => {
 const getSolicitationsById = (id) => {
   console.log('$$$$$$$$ id: ' + id);
     return new Promise((resolve, reject) => {
-        Solicitations.find({'acronym': new RegExp('.*' + id + '.*', "i")}, (err, solicitations) => {
+        Solicitations.find({'TITLE': new RegExp('.*' + id + '.*', "i")}, (err, solicitations) => {
             if (err) {
               console.log('^^^^^ Error: ' + err);
               reject(err);

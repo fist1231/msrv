@@ -3,48 +3,59 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var SolicitationSchema = new Schema({
-  id: {
+  SOLICITATION_ID: {
 	    type: String,
-	    required: 'Solicitation ID'
+	    required: 'SOLICITATION_ID'
   },
-  solicitation_number: {
+  SOLICITATION_NUMBER: {
     type: String,
     required: 'Solcitations Number'
   },
-  acronym: {
-    type: String,
-    required: 'Acronym'
-  },
-  title: {
-    type: String,
-    default: 'Solicitation title'
-  },
-  fiscal_year: {
+  PUBLICATION_APPROVAL: {
     type: Number,
-    default: 2018
+    required: 'PUBLICATION_APPROVAL'
   },
-  preview_date: {
+  FISCAL_YEAR: {
+    type: Number,
+    required: 'FISCAL_YEAR'
+  },
+  OMNIBUS_NUMBER: {
+    type: Number
+  },
+  TITLE: {
+    type: String
+  },
+  REVIEW_DATE: {
+    type: Date
+  },
+  SELECTION_DATE: {
+    type: Date
+  },
+  RELEASE_DATE: {
     type: Date,
-    default: Date.now
+    required: 'RELEASE_DATE'
   },
-  selection_date: {
+  CLOSE_DATE: {
     type: Date,
-    default: Date.now
+    required: 'CLOSE_DATE'
   },
-  release_date: {
-    type: Date,
-    default: Date.now
+  ANNOUNCEMENT_TYPE: {
+    type: String
   },
-  close_date: {
-    type: Date,
-    default: Date.now
+  CONTAINER_TYPE: {
+    type: String
   },
-  status: {
-    type: [{
-      type: String,
-      enum: ['pending', 'published', 'unpublished']
-    }],
-    default: ['pending']
+  AUTHORIZED_BY: {
+    type: String
+  },
+  WITHDRAWAL_REASON: {
+    type: String
+  },
+  WITHDRAWAL_DATE: {
+    type: Date
+  },
+  WITHDRAWN_BY: {
+    type: String
   }
 });
 
