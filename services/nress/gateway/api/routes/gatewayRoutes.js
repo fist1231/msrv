@@ -1,6 +1,8 @@
 'use strict';
 module.exports = function(app) {
   var controller = require('../controllers/reviewProposalsController');
+  var solicitationsList = require('../controllers/solicitationsController');
+  var usersList = require('../controllers/usersController');
 
   // ReviewProposals Routes
   // app.route('/nress/reviewProposals')
@@ -25,7 +27,6 @@ module.exports = function(app) {
   // .get(controller.find_reviewProposal);
 
 
-  var solicitationsList = require('../controllers/solicitationsController');
 
   // Solicitations Routes
   app.route('/nress/solicitations')
@@ -48,6 +49,29 @@ module.exports = function(app) {
   //
   // app.route('/nress/solicitation/:solicitationId')
   // .get(solicitationsList.find_solicitation);
+
+
+
+  app.route('/nress/users')
+    .get(usersList.list_all_users)
+    .post(usersList.create_a_user);
+
+
+  // app.route('/nress/users/:userId')
+  //   .get(usersList.read_a_user)
+  //   .get(usersList.filter_users)
+  //   .put(usersList.update_a_user)
+  //   .delete(usersList.delete_a_user);
+  //
+  //
+  // app.route('/nress/search')
+  // .get(usersList.list_all_users);
+  //
+  // app.route('/nress/search/:username')
+  // .get(usersList.filter_users);
+  //
+  // app.route('/nress/user/:userid')
+  // .get(usersList.find_user);
 
 
 };

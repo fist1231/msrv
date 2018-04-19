@@ -149,10 +149,13 @@ git pull origin master
 cd services/nress/users
 
 5. build production:
+npm run build
+sudo cp -a ./config/. ./build/config/.
 
+To test start:
+node ./build/index.js
 
-
-
+6.
 Docker:
 ======
 sudo docker build -t users-node:v1 .
@@ -162,11 +165,9 @@ sudo docker push ubt-master:443/users-node:v1
 K8s:
 ====
 cd  ./deploy
-//kubectl create -f users-node.yaml
 
 // Add $DNAME to users-node.yaml image: prop
-export DNAME="ubt-master" && envsubst < users-node.yaml | kubectl create -f -
-kubectl create -f users-node-service.yaml
+export DNAME="ubt-master" && envsubst < users-k8s.yaml | kubectl create -f -
 
 kubectl get pods
 kubectl get deployments
@@ -176,6 +177,15 @@ Firewall:
 ========
 Regular cmd (not admin)
 .\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "users:tcp:[]:30333:[10.0.2.5]:30333"
+
+Test in browser:
+http://192.168.56.1:30333/nress/users
+
+####################################################################################
+
+
+
+
 
 
 Prod build:
