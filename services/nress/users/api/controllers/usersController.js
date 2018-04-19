@@ -15,8 +15,8 @@ exports.list_all_users = function(req, res) {
 };
 
 exports.filter_users = function(req, res) {
-	
-	
+
+
 	 if(!req.params.username) {
 		 console.log('Term is empty');
 		  Users.find({}, function(err, user) {
@@ -28,7 +28,7 @@ exports.filter_users = function(req, res) {
 			  });
 	 } else {
 		 console.log('Term not empty: ');
-		  Users.find({'name': new RegExp('.*' + req.params.username + '.*', "i")}, function(err, user) {
+		  Users.find({'USERNAME': new RegExp('.*' + req.params.username + '.*', "i")}, function(err, user) {
 			    if (err) {
 			    	console.log('filter_users error: ' + err);
 			      return res.send(err);

@@ -27,7 +27,7 @@ exports.filter_solicitations = function(req, res) {
 			  });
 	 } else {
 		 console.log('Term not empty: ');
-		  Solicitations.find({'acronym': new RegExp('.*' + req.params.acronym + '.*', "i")}, function(err, solicitation) {
+		  Solicitations.find({'TITLE': new RegExp('.*' + req.params.acronym + '.*', "i")}, function(err, solicitation) {
 			    if (err) {
 			    	console.log('filter_solicitations error: ' + err);
 			      return res.send(err);
@@ -52,7 +52,7 @@ exports.create_solicitation = function(req, res) {
 
 exports.find_solicitation = function(req, res) {
 		 console.log('Term not empty: ');
-		  Solicitations.find({'id': req.params.solicitationId}, function(err, solicitation) {
+		  Solicitations.find({'SOLICITATION_ID': req.params.solicitationId}, function(err, solicitation) {
 			    if (err) {
 			    	console.log('find_solicitation error: ' + err);
 			    	return res.send(err);

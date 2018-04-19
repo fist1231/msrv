@@ -4,24 +4,64 @@ var Schema = mongoose.Schema;
 
 
 var UserSchema = new Schema({
-  id: {
+  _id: {
 	    type: String,
 	    required: 'Kindly enter id of the user'
 	  },
-  name: {
+  USERNAME: {
     type: String,
-    required: 'Kindly enter the name of the user'
+    required: 'Kindly enter the USERNAME of the user'
   },
-  created_date: {
-    type: Date,
-    default: Date.now
+  SALUTATION: {
+    type: String
   },
-  status: {
-    type: [{
-      type: String,
-      enum: ['pending', 'ongoing', 'completed']
-    }],
-    default: ['pending']
+  FIRST_NAME: {
+    type: String,
+    required: 'Kindly enter the FIRST_NAME of the user'
+  },
+  MIDDLE_INITIAL: {
+    type: String
+  },
+  LAST_NAME: {
+    type: String,
+    required: 'Kindly enter the LAST_NAME of the user'
+  },
+  SUFFIX: {
+    type: String,
+  },
+  ACTIVATIONTIME: {
+    type: Date
+  },
+  NSPIRES_USER_ID: {
+    type: String,
+    required: 'Kindly enter the NSPIRES_USER_ID of the user'
+  },
+  LAST_LOGIN_TIME: {
+    type: Date
+  },
+  SYSEFUS_ID: {
+    type: String
+  },
+  REGISTRATION_DATE: {
+    type: Date
+  },
+  CREATION_PATH: {
+    type: String
+  },
+  CREATED_BY: {
+    type: String
+  },
+  CREATOR_COMMENT: {
+    type: String
+  },
+  CHALLENGE_QUESTION: {
+    type: String
+  },
+  HASHED_RECOVERY: {
+    type: String
+  },
+  DEM_DATA_ID: {
+    type: String
   }
 });
 

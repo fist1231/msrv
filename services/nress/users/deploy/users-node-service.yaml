@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: users-node
+    name: users-node-service
+  name: users-node-service
+spec:
+  ports:
+  - nodePort: 30333
+    # The port that this service should serve on.
+    port: 3333
+    protocol: TCP
+    targetPort: 3333
+    nodePort: 30333
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: users-node
+  type: NodePort

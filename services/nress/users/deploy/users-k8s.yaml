@@ -1,0 +1,47 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: users-node
+  name: users-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: users-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: users-node
+    spec:
+      containers:
+      - image: $DNAME:443/users-node:v1
+        name: users-node
+        imagePullPolicy: Always
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: users-node
+    name: users-node-service
+  name: users-node-service
+spec:
+  ports:
+  - nodePort: 30333
+    # The port that this service should serve on.
+    port: 3333
+    protocol: TCP
+    targetPort: 3333
+    nodePort: 30333
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: users-node
+  type: NodePort

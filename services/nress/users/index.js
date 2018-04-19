@@ -1,3 +1,5 @@
+import config from './config/config.json'
+
 var Rx = require('rxjs');
 
 var cors = require('cors');
@@ -16,7 +18,7 @@ app.use(cors());
 mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost/nress_db');
 //mongoose.connect('mongodb://192.168.1.169:27017/nress_db', {
-mongoose.connect('mongodb://192.168.56.1:27017/nress_db', {
+mongoose.connect(config.db_connect, {
   useMongoClient: true
 });
 

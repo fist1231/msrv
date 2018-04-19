@@ -1,3 +1,11 @@
 {
+    "db_connect": "mongodb://192.168.56.1:27017/nress_db",
+    "db_connect_home" : "mongodb://192.168.1.169:27017/nress_db",
+    "ora_connect" : "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 172.20.11.101)(PORT = 1521)))(CONNECT_DATA = (SID = beta)(SRVR = DEDICATED)))",
+    "ora_usr" : "nspires_prod",
+    "ora_pwd" : "nspires4b3ta",
+    "ora_connect2" : "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 172.17.9.24)(PORT = 1521)))(CONNECT_DATA = (SID = ndevdb)(SRVR = DEDICATED)))",
+    "ora_usr2" : "nspires4",
+    "ora_pwd2" : "nspires4"
 
 }

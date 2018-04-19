@@ -121,3 +121,103 @@ kubectl delete service users-node-service
 kubectl delete deployment users-node
 
 sudo docker rmi pod-name-id
+
+
+
+##################################################################################
+=================== Deployment to k8s ==================
+1.
+npm install pm2 -save
+
+2.
+create Dockerfile
+create process.yml
+create service and deployment yamls: users-k8s.yaml
+
+3.
+Delete existing, if necessary:
+=======
+kubectl delete service users-node-service
+kubectl delete deployment users-node
+
+sudo docker rmi users-node:v1
+sudo docker rmi ubt-master:443/users-node:v1
+
+4. Checkout code from git/hub into dir on server:
+cd ~/repo/msrv
+
+
+Docker:
+======
+sudo docker build -t users-node:v1 .
+sudo docker tag users-node:v1 ubt-master:443/users-node:v1
+sudo docker push ubt-master:443/users-node:v1
+
+K8s:
+====
+cd  ./deploy
+//kubectl create -f users-node.yaml
+
+// Add $DNAME to users-node.yaml image: prop
+export DNAME="ubt-master" && envsubst < users-node.yaml | kubectl create -f -
+kubectl create -f users-node-service.yaml
+
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
+Firewall:
+========
+Regular cmd (not admin)
+.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "users:tcp:[]:30333:[10.0.2.5]:30333"
+
+
+Prod build:
+===========
+
+mkdir ./build
+del -r build/*
+
+npm install --save-dev babel-preset-es3 babel-preset-es2015-mod babel-plugin-transform-runtime
+npm install --save-dev babel-preset-es2015-mod
+npm install --save-dev babel-plugin-transform-runtime
+npm install babel-plugin-uglify --save-dev
+npm uninstall babel-plugin-uglify --save-dev
+
+Add to .bablerc:
+================
+"ignore": ["**/*.test.js", "node_modules"]
+
+Add to package.json:
+====================
+//"prebuild": "rm -rf build/*",
+//"prebuild": "del /r /f /q build"  // cmd
+"prebuild": "del -R -Force -Path build && mkdir build",  // powershell
+"build": "babel --minified=true --presets=es2015 . -d ./build -s",
+"prestart": "npm build",
+//"start-prod": "NODE_ENV=production node ./build/index.js" - not working
+
+
+npm run build
+
+sudo cp -a ./config/. ./build/config/.
+
+start:
+node ./build/index.js
+
+pm2 start:
+=========
+pm2 start ./build/index.js
+pm2 list
+pm2 stop ./build/index.js
+pm2 delete $id
+pm2 kill
+
+
+Spinoff:
+=======
+kubectl delete service users-node-service
+kubectl delete deployment users-node
+
+sudo docker rmi users-node:v1
+sudo docker rmi ubt-master:443/users-node:v1
