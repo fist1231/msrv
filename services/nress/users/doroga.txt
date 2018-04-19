@@ -145,6 +145,12 @@ sudo docker rmi ubt-master:443/users-node:v1
 
 4. Checkout code from git/hub into dir on server:
 cd ~/repo/msrv
+git pull origin master
+cd services/nress/users
+
+5. build production:
+
+
 
 
 Docker:
@@ -182,7 +188,9 @@ npm install --save-dev babel-preset-es3 babel-preset-es2015-mod babel-plugin-tra
 npm install --save-dev babel-preset-es2015-mod
 npm install --save-dev babel-plugin-transform-runtime
 npm install babel-plugin-uglify --save-dev
-npm uninstall babel-plugin-uglify --save-dev
+#npm uninstall babel-plugin-uglify --save-dev
+npm install babel-minify --save-dev
+npm install babel-plugin-transform-minify-booleans --save-dev
 
 Add to .bablerc:
 ================
@@ -193,7 +201,10 @@ Add to package.json:
 //"prebuild": "rm -rf build/*",
 //"prebuild": "del /r /f /q build"  // cmd
 "prebuild": "del -R -Force -Path build && mkdir build",  // powershell
+
+//"build": "babel . -d ./build -s && mkdir \"build/config\" && copy \"config/.\" \"build/config\"",
 "build": "babel --minified=true --presets=es2015 . -d ./build -s",
+
 "prestart": "npm build",
 //"start-prod": "NODE_ENV=production node ./build/index.js" - not working
 
