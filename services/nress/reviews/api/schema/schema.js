@@ -20,9 +20,10 @@
 const schema = `
   type Query {
     reviewProposals: [ReviewProposal],
-    reviewProposalsById(filter: String, first: Int): [ReviewProposal]
+    reviewProposalsSearch(filter: String, first: Int): [ReviewProposal],
+    reviewProposalById(id: String, first: Int): [ReviewProposal]
   }
-  type ReviewProposal { ASSIGNED_RESPONSE_ID: String!, FIRST_NAME: String, LAST_NAME: String, RESPONSE_NUMBER: String, RESPONSE_SEQ_NUMBER: String, PSTATE: String}
+  type ReviewProposal { ASSIGNED_RESPONSE_ID: String!, FIRST_NAME: String, LAST_NAME: String, RESPONSE_NUMBER: String, RESPONSE_SEQ_NUMBER: String, PSTATE: String, GENERATED_STATUS: String, PANEL_ID: String, ACRONYM: String, EVALUATION_STATUS: String}
 `;
 
 /*
