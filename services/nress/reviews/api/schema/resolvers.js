@@ -186,7 +186,7 @@ const getReviewProposalById = (id) => {
            detailsQuery,
 
           // The "bind value" 180 for the bind variable ":id"
-          [id],
+          {structureId: "2C9E834A2F5ED5E7012F9D7AAA511934", proposalId: id},
           // execute() options argument.  Since the query only returns one
           // row, we can optimize memory usage by reducing the default
           // maxRows value.  For the complete list of other options see
@@ -580,7 +580,7 @@ select * from
                     reviewer r1,
                     nspires_user u1
                 where
-                    r1.REVIEW_STRUCTURE_ID = :id and
+                    r1.REVIEW_STRUCTURE_ID = :structureId and
                     ir1.reviewer_id=r1.reviewer_id
                     and r1.nspires_user_id=u1.nspires_user_id
                     and ir1.ROLE='PRIMARY_REVIEWER_ROLE'
@@ -605,7 +605,7 @@ select * from
                     reviewer r2,
                     nspires_user u2
                 where
-                    r2.REVIEW_STRUCTURE_ID = :id and
+                    r2.REVIEW_STRUCTURE_ID = :structureId and
                     ir2.reviewer_id=r2.reviewer_id
                     and r2.nspires_user_id=u2.nspires_user_id
                     and ir2.ROLE='SECONDARY_REVIEWER_ROLE'
@@ -630,7 +630,7 @@ select * from
                     reviewer r3,
                     nspires_user u3
                 where
-                    r3.REVIEW_STRUCTURE_ID = :id and
+                    r3.REVIEW_STRUCTURE_ID = :structureId and
                     ir3.reviewer_id=r3.reviewer_id
                     and r3.nspires_user_id=u3.nspires_user_id
                     and ir3.ROLE='NON_PANELIST_REVIEWER_ROLE'
@@ -641,11 +641,10 @@ select * from
             TEAM_MEMBER_ROLE tmr,
             TEAM_MEMBER_TYPE tmt
         where
-            ap.ASSIGNED_RESPONSE_ID = :id
+            ap.ASSIGNED_RESPONSE_ID = :proposalId
             and tmr.TEAM_MEMBER_TYPE_ID=tmt.TEAM_MEMBER_TYPE_ID
             and tm.TEAM_MEMBER_ROLE_ID=tmr.TEAM_MEMBER_ROLE_ID
             and tmt.TEAM_ROLE_TYPE='PI_TYPE'
             and rsas2.REVIEW_ST_RESP_ST_ASSOC_ID=rsas.REVIEW_ST_RESP_ST_ASSOC_ID
             )
-       )
 `
