@@ -25,26 +25,14 @@ const schema = `
 
   type Mutation {
     updateSolicitation(
-      SOLICITATION_ID: String!,
-      SOLICITATION_NUMBER: String!,
-      PUBLICATION_APPROVAL: Int!,
-      FISCAL_YEAR: Int!,
-      OMNIBUS_NUMBER: String,
-      TITLE: String!,
-      REVIEW_DATE:String,
-      SELECTION_DATE: String,
-      RELEASE_DATE: String!,
-      CLOSE_DATE: String!,
-      ANNOUNCEMENT_TYPE: String!,
-      CONTAINER_TYPE: String!,
-      AUTHORIZED_BY: String,
-      WITHDRAWAL_REASON: String,
-      WITHDRAWAL_DATE: String,
-      WITHDRAWN_BY: String
+      _id: String!,
+      TITLE: String!
     ): Solicitation
   }
 
+
   type Solicitation {
+    _id: String!
     SOLICITATION_ID: String!,
     SOLICITATION_NUMBER: String!,
     PUBLICATION_APPROVAL: Int!,
@@ -63,6 +51,29 @@ const schema = `
     WITHDRAWN_BY: String
   }
 `;
+
+
+// type Mutation {
+//   updateSolicitation(
+//     _id: String!,
+//     SOLICITATION_ID: String!,
+//     SOLICITATION_NUMBER: String!,
+//     PUBLICATION_APPROVAL: Int!,
+//     FISCAL_YEAR: Int!,
+//     OMNIBUS_NUMBER: String,
+//     TITLE: String!,
+//     REVIEW_DATE:String,
+//     SELECTION_DATE: String,
+//     RELEASE_DATE: String!,
+//     CLOSE_DATE: String!,
+//     ANNOUNCEMENT_TYPE: String!,
+//     CONTAINER_TYPE: String!,
+//     AUTHORIZED_BY: String,
+//     WITHDRAWAL_REASON: String,
+//     WITHDRAWAL_DATE: String,
+//     WITHDRAWN_BY: String
+//   ): Solicitation
+// }
 
 /*
 const QueryType = new GraphQLObjectType({

@@ -1,8 +1,8 @@
 'use strict';
 import axios from 'axios';
 
-// const url = "http://192.168.56.1:30333/nress/users";
-const url = "http://192.168.56.1:3333/nress/users";
+const url = "http://192.168.56.1:30333/nress/users";
+// const url = "http://192.168.56.1:3333/nress/users";
 
 
 exports.list_all_users = function(req, res) {

@@ -32,6 +32,28 @@ const getSolicitationsById = (id) => {
     })
 };
 
+const updateSolicitation = (solId, solTitle) => {
+  console.log('$$$$$$$$ updateSolicitation solId: ' + solId);
+  console.log('$$$$$$$$ updateSolicitation solTitle: ' + solTitle);
+    return new Promise((resolve, reject) => {
+        Solicitations.findByIdAndUpdate(
+          { "_id" : solId },
+          { $set: { TITLE: solTitle } },
+          { upsert: false, new: true },
+          // { upsert:false, returnNewDocument : true },
+          (err, solicitation) => {
+            if (err) {
+              console.log('^^^^^ updateSolicitation Error: ' + err);
+              reject(err);
+            } else {
+              console.log('^^^^^ Solicitation data updated for solId: ' + solId);
+              resolve(solicitation);
+            }
+          }
+        )
+    })
+};
+
 
 
 const sols = [
@@ -53,15 +75,7 @@ const resolvers  = {
     solicitationsById: (_, { filter }) => getSolicitationsById(filter),
   },
   Mutation: {
-    updateSolicitation: (_, { _id, firstName, lastName }) => {
-       const solicitation = find(authors, { id: authorId });
-       if (!author) {
-         throw new Error(`Couldn’t find author with id ${authorId}`);
-       }
-       author.firstName = firstName;
-       author.lastName = lastName;
-       return author;
-      },
+    updateSolicitation: (_, { _id, TITLE }) => updateSolicitation(_id, TITLE),
   },
 
   // Solicitation: {
