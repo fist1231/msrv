@@ -52,6 +52,18 @@ const resolvers  = {
     solicitations: () => solicitationList(),
     solicitationsById: (_, { filter }) => getSolicitationsById(filter),
   },
+  Mutation: {
+    updateSolicitation: (_, { _id, firstName, lastName }) => {
+       const solicitation = find(authors, { id: authorId });
+       if (!author) {
+         throw new Error(`Couldn’t find author with id ${authorId}`);
+       }
+       author.firstName = firstName;
+       author.lastName = lastName;
+       return author;
+      },
+  },
+
   // Solicitation: {
   //   id(id) {
   //     return solicitations.find(sol => sol.id === id);
