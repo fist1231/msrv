@@ -55,6 +55,59 @@ const updateSolicitation = (solId, solTitle) => {
 };
 
 
+const addSolicitation = (
+  SOLICITATION_ID,
+  SOLICITATION_NUMBER,
+  PUBLICATION_APPROVAL,
+  FISCAL_YEAR,
+  OMNIBUS_NUMBER,
+  TITLE,
+  REVIEW_DATE,
+  SELECTION_DATE,
+  RELEASE_DATE,
+  CLOSE_DATE,
+  ANNOUNCEMENT_TYPE,
+  CONTAINER_TYPE,
+  AUTHORIZED_BY,
+  WITHDRAWAL_REASON,
+  WITHDRAWAL_DATE,
+  WITHDRAWN_BY
+) => {
+  console.log('$$$$$$$$ addSolicitation SOLICITATION_ID: ' + SOLICITATION_ID);
+    return new Promise((resolve, reject) => {
+        Solicitations.create({
+          "SOLICITATION_ID": SOLICITATION_ID,
+          "SOLICITATION_NUMBER": SOLICITATION_NUMBER,
+          "PUBLICATION_APPROVAL": PUBLICATION_APPROVAL,
+          "FISCAL_YEAR": FISCAL_YEAR,
+          "OMNIBUS_NUMBER": OMNIBUS_NUMBER,
+          "TITLE": TITLE,
+          "REVIEW_DATE": REVIEW_DATE,
+          "SELECTION_DATE": SELECTION_DATE,
+          "RELEASE_DATE": RELEASE_DATE,
+          "CLOSE_DATE": CLOSE_DATE,
+          "ANNOUNCEMENT_TYPE": ANNOUNCEMENT_TYPE,
+          "CONTAINER_TYPE": CONTAINER_TYPE,
+          "AUTHORIZED_BY": AUTHORIZED_BY,
+          "WITHDRAWAL_REASON": WITHDRAWAL_REASON,
+          "WITHDRAWAL_DATE": WITHDRAWAL_DATE,
+          "WITHDRAWN_BY": WITHDRAWN_BY
+          },
+          // { upsert:false, returnNewDocument : true },
+          (err, solicitation) => {
+            if (err) {
+              console.log('^^^^^ addSolicitation Error: ' + err);
+              reject(err);
+            } else {
+              console.log('^^^^^ Solicitation created with _id: ' + solicitation._id);
+              resolve(solicitation);
+            }
+          }
+        )
+    })
+};
+
+
 
 const sols = [
   {
@@ -76,6 +129,41 @@ const resolvers  = {
   },
   Mutation: {
     updateSolicitation: (_, { _id, TITLE }) => updateSolicitation(_id, TITLE),
+    addSolicitation: (_, {
+      SOLICITATION_ID,
+      SOLICITATION_NUMBER,
+      PUBLICATION_APPROVAL,
+      FISCAL_YEAR,
+      OMNIBUS_NUMBER,
+      TITLE,
+      REVIEW_DATE,
+      SELECTION_DATE,
+      RELEASE_DATE,
+      CLOSE_DATE,
+      ANNOUNCEMENT_TYPE,
+      CONTAINER_TYPE,
+      AUTHORIZED_BY,
+      WITHDRAWAL_REASON,
+      WITHDRAWAL_DATE,
+      WITHDRAWN_BY
+    }) => addSolicitation(
+      SOLICITATION_ID,
+      SOLICITATION_NUMBER,
+      PUBLICATION_APPROVAL,
+      FISCAL_YEAR,
+      OMNIBUS_NUMBER,
+      TITLE,
+      REVIEW_DATE,
+      SELECTION_DATE,
+      RELEASE_DATE,
+      CLOSE_DATE,
+      ANNOUNCEMENT_TYPE,
+      CONTAINER_TYPE,
+      AUTHORIZED_BY,
+      WITHDRAWAL_REASON,
+      WITHDRAWAL_DATE,
+      WITHDRAWN_BY
+    ),
   },
 
   // Solicitation: {
