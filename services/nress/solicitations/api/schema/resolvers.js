@@ -74,9 +74,11 @@ const addSolicitation = (
   WITHDRAWN_BY
 ) => {
   console.log('$$$$$$$$ addSolicitation SOLICITATION_ID: ' + SOLICITATION_ID);
+  console.log('$$$$$$$$ addSolicitation OMNIBUS_NUMBER: ' + OMNIBUS_NUMBER);
+  console.log('$$$$$$$$ addSolicitation AUTHORIZED_BY: ' + AUTHORIZED_BY);
     return new Promise((resolve, reject) => {
         Solicitations.create({
-          "SOLICITATION_ID": SOLICITATION_ID,
+          "SOLICITATION_ID": SOLICITATION_NUMBER,
           "SOLICITATION_NUMBER": SOLICITATION_NUMBER,
           "PUBLICATION_APPROVAL": PUBLICATION_APPROVAL,
           "FISCAL_YEAR": FISCAL_YEAR,
@@ -97,9 +99,11 @@ const addSolicitation = (
           (err, solicitation) => {
             if (err) {
               console.log('^^^^^ addSolicitation Error: ' + err);
+              console.log('^^^^^ addSolicitation Error: ' + solicitation);
               reject(err);
             } else {
               console.log('^^^^^ Solicitation created with _id: ' + solicitation._id);
+              console.log('^^^^^ Solicitation created with solicitation: ' + solicitation);
               resolve(solicitation);
             }
           }
@@ -107,6 +111,31 @@ const addSolicitation = (
     })
 };
 
+const deleteSolicitation = (solId) => {
+  console.log('$$$$$$$$ deleteSolicitation solId: ' + solId);
+    return new Promise((resolve, reject) => {
+        Solicitations.findByIdAndRemove(solId, (err, solicitation) => {
+            if (err) {
+              console.log('^^^^^ deleteSolicitation Error: ' + err);
+              console.log('^^^^^ deleteSolicitation Error res: ' + solicitation);
+              reject({
+                id: solId,
+                result: undefined,
+                error: err
+              });
+            } else {
+              // console.log('^^^^^ Solicitation deleted with id: ' + solId);
+              console.log('^^^^^ Solicitation deleted: ' + solicitation);
+              resolve({
+                id: solId,
+                result: solicitation?`DELETE SUCCESS for id:${solicitation._id}`:undefined,
+                error: solicitation?undefined:`DELETE FAILED not found solicitation id:${solId}`
+              });
+            }
+          }
+        )
+    })
+};
 
 
 const sols = [
@@ -164,6 +193,7 @@ const resolvers  = {
       WITHDRAWAL_DATE,
       WITHDRAWN_BY
     ),
+    deleteSolicitation: (_, { _id }) => deleteSolicitation(_id)
   },
 
   // Solicitation: {

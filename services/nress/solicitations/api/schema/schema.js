@@ -45,7 +45,10 @@ const schema = `
       WITHDRAWAL_REASON: String,
       WITHDRAWAL_DATE: String,
       WITHDRAWN_BY: String
-    ): Solicitation
+    ): Solicitation,
+    deleteSolicitation(
+      _id: String!
+    ): ActionResult
   }
 
 
@@ -67,6 +70,12 @@ const schema = `
     WITHDRAWAL_REASON: String,
     WITHDRAWAL_DATE: String,
     WITHDRAWN_BY: String
+  }
+
+  type ActionResult {
+    id: String,
+    result: String,
+    error: String
   }
 `;
 
