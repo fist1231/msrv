@@ -32,21 +32,57 @@ const getSolicitationsById = (id) => {
     })
 };
 
-const updateSolicitation = (solId, solTitle) => {
-  console.log('$$$$$$$$ updateSolicitation solId: ' + solId);
-  console.log('$$$$$$$$ updateSolicitation solTitle: ' + solTitle);
+const updateSolicitation = (
+  _id,
+  SOLICITATION_ID,
+  SOLICITATION_NUMBER,
+  PUBLICATION_APPROVAL,
+  FISCAL_YEAR,
+  OMNIBUS_NUMBER,
+  TITLE,
+  REVIEW_DATE,
+  SELECTION_DATE,
+  RELEASE_DATE,
+  CLOSE_DATE,
+  ANNOUNCEMENT_TYPE,
+  CONTAINER_TYPE,
+  AUTHORIZED_BY,
+  WITHDRAWAL_REASON,
+  WITHDRAWAL_DATE,
+  WITHDRAWN_BY
+) => {
+  console.log('$$$$$$$$ updateSolicitation _id: ' + _id);
+  console.log('$$$$$$$$ updateSolicitation TITLE: ' + TITLE);
     return new Promise((resolve, reject) => {
-        Solicitations.findByIdAndUpdate(
-          { "_id" : solId },
-          { $set: { TITLE: solTitle } },
+        Solicitations.findByIdAndUpdate({ "_id" : _id },
+          { $set: {
+            "SOLICITATION_ID": SOLICITATION_ID,
+            "SOLICITATION_NUMBER": SOLICITATION_NUMBER,
+            "PUBLICATION_APPROVAL": PUBLICATION_APPROVAL,
+            "FISCAL_YEAR": FISCAL_YEAR,
+            "OMNIBUS_NUMBER": OMNIBUS_NUMBER,
+            "TITLE": TITLE,
+            "REVIEW_DATE": REVIEW_DATE,
+            "SELECTION_DATE": SELECTION_DATE,
+            "RELEASE_DATE": RELEASE_DATE,
+            "CLOSE_DATE": CLOSE_DATE,
+            "ANNOUNCEMENT_TYPE": ANNOUNCEMENT_TYPE,
+            "CONTAINER_TYPE": CONTAINER_TYPE,
+            "AUTHORIZED_BY": AUTHORIZED_BY,
+            "WITHDRAWAL_REASON": WITHDRAWAL_REASON,
+            "WITHDRAWAL_DATE": WITHDRAWAL_DATE,
+            "WITHDRAWN_BY": WITHDRAWN_BY
+          } },
           { upsert: false, new: true },
           // { upsert:false, returnNewDocument : true },
           (err, solicitation) => {
             if (err) {
               console.log('^^^^^ updateSolicitation Error: ' + err);
+              console.log('^^^^^ updateSolicitation Error: ' + solicitation);
               reject(err);
             } else {
-              console.log('^^^^^ Solicitation data updated for solId: ' + solId);
+              console.log('^^^^^ Solicitation data updated for solId: ' + _id);
+              console.log('^^^^^ updateSolicitation updated: ' + solicitation);
               resolve(solicitation);
             }
           }
@@ -157,7 +193,43 @@ const resolvers  = {
     solicitationsById: (_, { filter }) => getSolicitationsById(filter),
   },
   Mutation: {
-    updateSolicitation: (_, { _id, TITLE }) => updateSolicitation(_id, TITLE),
+    updateSolicitation: (_, {
+      _id,
+      SOLICITATION_ID,
+      SOLICITATION_NUMBER,
+      PUBLICATION_APPROVAL,
+      FISCAL_YEAR,
+      OMNIBUS_NUMBER,
+      TITLE,
+      REVIEW_DATE,
+      SELECTION_DATE,
+      RELEASE_DATE,
+      CLOSE_DATE,
+      ANNOUNCEMENT_TYPE,
+      CONTAINER_TYPE,
+      AUTHORIZED_BY,
+      WITHDRAWAL_REASON,
+      WITHDRAWAL_DATE,
+      WITHDRAWN_BY
+    }) => updateSolicitation(
+      _id,
+      SOLICITATION_ID,
+      SOLICITATION_NUMBER,
+      PUBLICATION_APPROVAL,
+      FISCAL_YEAR,
+      OMNIBUS_NUMBER,
+      TITLE,
+      REVIEW_DATE,
+      SELECTION_DATE,
+      RELEASE_DATE,
+      CLOSE_DATE,
+      ANNOUNCEMENT_TYPE,
+      CONTAINER_TYPE,
+      AUTHORIZED_BY,
+      WITHDRAWAL_REASON,
+      WITHDRAWAL_DATE,
+      WITHDRAWN_BY
+    ),
     addSolicitation: (_, {
       SOLICITATION_ID,
       SOLICITATION_NUMBER,

@@ -20,7 +20,7 @@ var SolicitationSchema = new Schema({
     required: 'FISCAL_YEAR'
   },
   OMNIBUS_NUMBER: {
-    type: Number
+    type: String
   },
   TITLE: {
     type: String
