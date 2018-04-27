@@ -64,12 +64,12 @@ module.exports = function(app) {
   //   .delete(usersList.delete_a_user);
   //
   //
-  // app.route('/nress/search')
-  // .get(usersList.list_all_users);
-  //
-  // app.route('/nress/search/:username')
-  // .get(usersList.filter_users);
-  //
+  app.route('/nress/search')
+  .get(usersList.list_all_users);
+
+  app.route('/nress/search/:username')
+  .get(usersList.filter_users);
+
   // app.route('/nress/user/:userid')
   // .get(usersList.find_user);
 

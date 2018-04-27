@@ -1,16 +1,16 @@
 'use strict';
 import axios from 'axios';
 
-const url = "http://192.168.56.1:30333/nress/users";
+const usersServiceUrl = "http://192.168.56.1:30333";
 // const url = "http://192.168.56.1:3333/nress/users";
 
 
 exports.list_all_users = function(req, res) {
   console.log('********** Gateway: list_all_users called #######');
   // res.json(sols);
-
+  const targetUrl = usersServiceUrl + req.originalUrl;
   axios
-    .get(url)
+    .get(targetUrl)
     .then(response => {
       // console.log('********** Gateway: list_all_solicitations result:' + JSON.stringify(response.data));
       res.json(response.data);
@@ -22,6 +22,24 @@ exports.list_all_users = function(req, res) {
 
 exports.create_a_user = function(req, res) {
   console.log('********** Gateway: create_a_user called #######');
+};
+
+exports.filter_users = function(req, res) {
+  console.log('********** Gateway: filter_users called #######');
+  console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
+  console.log('********** Gateway: filter_users url=' + req.url);
+  // res.json(sols);
+  const targetUrl = usersServiceUrl + req.originalUrl;
+
+  axios
+    .get(targetUrl)
+    .then(response => {
+      // console.log('********** Gateway: filter_users result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: filter_users error:' + error);
+    });
 };
 
 

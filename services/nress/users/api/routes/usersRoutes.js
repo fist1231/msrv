@@ -14,7 +14,7 @@ module.exports = function(app) {
     .put(usersList.update_a_user)
     .delete(usersList.delete_a_user);
 
-  
+
   app.route('/nress/search')
   .get(usersList.list_all_users);
 
@@ -23,12 +23,12 @@ module.exports = function(app) {
 
   app.route('/nress/user/:userid')
   .get(usersList.find_user);
-  
-  
+
+
 // app.route('/nress/users/filter')
 // .get(usersList.list_all_users);
 
-	
+
 //  app.route('/nress/users/:username', findUserByUsernameMiddleware)
 //  .get(function(req, res, next) {
 //	  console.log('preKEY');
@@ -41,5 +41,5 @@ module.exports = function(app) {
 //} catch (e) {
 //	console.log('ERROR: ' + e);
 //}
-  
+
 };
