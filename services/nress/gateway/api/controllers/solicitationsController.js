@@ -1,15 +1,18 @@
 'use strict';
 import axios from 'axios';
+import config from '../../config/config.json'
 
 const url = "http://localhost:3334/nress/solicitations";
+const solicitationsServiceUrl = `${config.solicitations_address}`;
 
 
 exports.list_all_solicitations = function(req, res) {
     console.log('********** Gateway: list_all_solicitations called #######');
     // res.json(sols);
+    const targetUrl = solicitationsServiceUrl + req.originalUrl;
 
     axios
-      .get(url)
+      .get(targetUrl)
       .then(response => {
         // console.log('********** Gateway: list_all_solicitations result:' + JSON.stringify(response.data));
         res.json(response.data);

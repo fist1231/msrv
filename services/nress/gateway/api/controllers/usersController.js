@@ -1,8 +1,10 @@
 'use strict';
 import axios from 'axios';
+import config from '../../config/config.json'
 
-const usersServiceUrl = "http://192.168.56.1:30333";
-// const url = "http://192.168.56.1:3333/nress/users";
+
+// const usersServiceUrl = "http://192.168.56.1:30333";
+const usersServiceUrl = `${config.users_address}`;
 
 
 exports.list_all_users = function(req, res) {
