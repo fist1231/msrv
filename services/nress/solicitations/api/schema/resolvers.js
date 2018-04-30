@@ -10,7 +10,7 @@ const solicitationList = () => {
               console.log('^^^^^ Error: ' + err);
               reject(err);
             } else {
-              console.log('^^^^^ solicitations: ' + solicitations);
+              // console.log('^^^^^ solicitations: ' + solicitations);
               resolve(solicitations);
             }
         })
@@ -25,7 +25,9 @@ const getSolicitationsById = (id) => {
               console.log('^^^^^ Error: ' + err);
               reject(err);
             } else {
-              console.log('^^^^^ id: ' + id);
+              // console.log('^^^^^ id: ' + id);
+              // console.log('^^^^^ solicitations: ' + solicitations);
+              console.log(solicitations.length);
               resolve(solicitations);
             }
         })
