@@ -41,6 +41,7 @@ const getSolicitationsById = (filter) => {
         }
       })
       .then(response => {
+          console.log('********** Gateway: getSolicitationsById success');
           resolve(response.data.data.solicitationsById);
       })
       .catch(error => {
@@ -85,34 +86,37 @@ const updateSolicitation = (
   WITHDRAWAL_DATE,
   WITHDRAWN_BY
 ) => {
-  console.log('$$$$$$$$ updateSolicitation _id: ' + _id);
-  // console.log('$$$$$$$$ updateSolicitation TITLE: ' + TITLE);
+  console.log('uuuuuuuuuu updateSolicitation _id: ' + _id);
+   // console.log('uuuuuuuuuu updateSolicitation REVIEW_DATE: ' + JSON.stringify(REVIEW_DATE));
+   // console.log('uuuuuuuuuu updateSolicitation SELECTION_DATE: ' + SELECTION_DATE);
+   // console.log('uuuuuuuuuu updateSolicitation RELEASE_DATE: ' + JSON.stringify(RELEASE_DATE));
+   // console.log('uuuuuuuuuu updateSolicitation CLOSE_DATE: ' + CLOSE_DATE);
+   // console.log('uuuuuuuuuu updateSolicitation WITHDRAWAL_DATE: ' + WITHDRAWAL_DATE);
     return new Promise((resolve, reject) => {
       axios({
           url: `${solicitationsServiceUrl}/graphql`,
           method: 'post',
-          // headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           // headers: { 'Content-Type': 'application/graphql' },
           data: {
-            query: `
-              mutation { updateSolicitation (
-                _id: ${_id},
-                SOLICITATION_ID: ${SOLICITATION_ID},
-                SOLICITATION_NUMBER: ${SOLICITATION_NUMBER},
-                PUBLICATION_APPROVAL: ${PUBLICATION_APPROVAL},
-                FISCAL_YEAR: ${FISCAL_YEAR},
-                OMNIBUS_NUMBER: ${OMNIBUS_NUMBER},
-                TITLE: ${TITLE},
-                REVIEW_DATE: ${REVIEW_DATE},
-                SELECTION_DATE: ${SELECTION_DATE},
-                RELEASE_DATE: ${RELEASE_DATE},
-                CLOSE_DATE: ${CLOSE_DATE},
-                ANNOUNCEMENT_TYPE: ${ANNOUNCEMENT_TYPE},
-                CONTAINER_TYPE: ${CONTAINER_TYPE},
-                AUTHORIZED_BY: ${AUTHORIZED_BY},
-                WITHDRAWAL_REASON: ${WITHDRAWAL_REASON},
-                WITHDRAWAL_DATE: ${WITHDRAWAL_DATE},
-                WITHDRAWN_BY: ${WITHDRAWN_BY}
+            query: `mutation { updateSolicitation (
+                _id: ${JSON.stringify(_id)},
+                SOLICITATION_ID: ${JSON.stringify(SOLICITATION_ID)},
+                SOLICITATION_NUMBER: ${JSON.stringify(SOLICITATION_NUMBER)},
+                PUBLICATION_APPROVAL: ${JSON.stringify(PUBLICATION_APPROVAL)},
+                FISCAL_YEAR: ${JSON.stringify(FISCAL_YEAR)},
+                OMNIBUS_NUMBER: ${JSON.stringify(OMNIBUS_NUMBER)},
+                TITLE: ${JSON.stringify(TITLE)},
+                REVIEW_DATE: ${JSON.stringify(REVIEW_DATE)},
+                SELECTION_DATE: ${JSON.stringify(SELECTION_DATE)},
+                RELEASE_DATE: ${JSON.stringify(RELEASE_DATE)},
+                CLOSE_DATE: ${JSON.stringify(CLOSE_DATE)},
+                ANNOUNCEMENT_TYPE: ${JSON.stringify(ANNOUNCEMENT_TYPE)},
+                CONTAINER_TYPE: ${JSON.stringify(CONTAINER_TYPE)},
+                AUTHORIZED_BY: ${JSON.stringify(AUTHORIZED_BY)},
+                WITHDRAWAL_REASON: ${JSON.stringify(WITHDRAWAL_REASON)},
+                WITHDRAWAL_DATE: ${JSON.stringify(WITHDRAWAL_DATE)},
+                WITHDRAWN_BY: ${JSON.stringify(WITHDRAWN_BY)}
               )
                    {
                      _id,
@@ -133,14 +137,16 @@ const updateSolicitation = (
                      WITHDRAWAL_DATE,
                      WITHDRAWN_BY
                    }
-               }`
+              }`
           }
         })
         .then(response => {
+            // console.log('uuuuuuuuuu Gateway: updateSolicitation success:' + JSON.stringify(response.data));
+            console.log('uuuuuuuuuu Gateway: updateSolicitation success');
             resolve(response.data.data.updateSolicitation);
         })
         .catch(error => {
-          console.log('********** Gateway: updateSolicitation error:' + error);
+          console.log('uuuuuuuuuu Gateway: updateSolicitation error:' + error);
           reject(error);
         });
     })
@@ -165,67 +171,98 @@ const addSolicitation = (
   WITHDRAWAL_DATE,
   WITHDRAWN_BY
 ) => {
-  console.log('$$$$$$$$ addSolicitation SOLICITATION_ID: ' + SOLICITATION_ID);
-  console.log('$$$$$$$$ addSolicitation OMNIBUS_NUMBER: ' + OMNIBUS_NUMBER);
-  console.log('$$$$$$$$ addSolicitation AUTHORIZED_BY: ' + AUTHORIZED_BY);
+  console.log('++++++++++ addSolicitation id: ' + SOLICITATION_ID);
+  // console.log('++++++++++ addSolicitation OMNIBUS_NUMBER: ' + OMNIBUS_NUMBER);
+  // console.log('++++++++++ addSolicitation AUTHORIZED_BY: ' + AUTHORIZED_BY);
     return new Promise((resolve, reject) => {
-        Solicitations.create({
-          "SOLICITATION_ID": SOLICITATION_NUMBER,
-          "SOLICITATION_NUMBER": SOLICITATION_NUMBER,
-          "PUBLICATION_APPROVAL": PUBLICATION_APPROVAL,
-          "FISCAL_YEAR": FISCAL_YEAR,
-          "OMNIBUS_NUMBER": OMNIBUS_NUMBER,
-          "TITLE": TITLE,
-          "REVIEW_DATE": REVIEW_DATE,
-          "SELECTION_DATE": SELECTION_DATE,
-          "RELEASE_DATE": RELEASE_DATE,
-          "CLOSE_DATE": CLOSE_DATE,
-          "ANNOUNCEMENT_TYPE": ANNOUNCEMENT_TYPE,
-          "CONTAINER_TYPE": CONTAINER_TYPE,
-          "AUTHORIZED_BY": AUTHORIZED_BY,
-          "WITHDRAWAL_REASON": WITHDRAWAL_REASON,
-          "WITHDRAWAL_DATE": WITHDRAWAL_DATE,
-          "WITHDRAWN_BY": WITHDRAWN_BY
-          },
-          // { upsert:false, returnNewDocument : true },
-          (err, solicitation) => {
-            if (err) {
-              console.log('^^^^^ addSolicitation Error: ' + err);
-              console.log('^^^^^ addSolicitation Error: ' + solicitation);
-              reject(err);
-            } else {
-              console.log('^^^^^ Solicitation created with _id: ' + solicitation._id);
-              console.log('^^^^^ Solicitation created with solicitation: ' + solicitation);
-              resolve(solicitation);
+      axios({
+          url: `${solicitationsServiceUrl}/graphql`,
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          // headers: { 'Content-Type': 'application/graphql' },
+          data: {
+            query: `mutation { addSolicitation (
+                  SOLICITATION_ID: ${JSON.stringify(SOLICITATION_ID)},
+                  SOLICITATION_NUMBER: ${JSON.stringify(SOLICITATION_NUMBER)},
+                  PUBLICATION_APPROVAL: ${JSON.stringify(PUBLICATION_APPROVAL)},
+                  FISCAL_YEAR: ${JSON.stringify(FISCAL_YEAR)},
+                  OMNIBUS_NUMBER: ${JSON.stringify(OMNIBUS_NUMBER)},
+                  TITLE: ${JSON.stringify(TITLE)},
+                  REVIEW_DATE: ${JSON.stringify(REVIEW_DATE)},
+                  SELECTION_DATE: ${JSON.stringify(SELECTION_DATE)},
+                  RELEASE_DATE: ${JSON.stringify(RELEASE_DATE)},
+                  CLOSE_DATE: ${JSON.stringify(CLOSE_DATE)},
+                  ANNOUNCEMENT_TYPE: ${JSON.stringify(ANNOUNCEMENT_TYPE)},
+                  CONTAINER_TYPE: ${JSON.stringify(CONTAINER_TYPE)},
+                  AUTHORIZED_BY: ${JSON.stringify(AUTHORIZED_BY)},
+                  WITHDRAWAL_REASON: ${JSON.stringify(WITHDRAWAL_REASON)},
+                  WITHDRAWAL_DATE: ${JSON.stringify(WITHDRAWAL_DATE)},
+                  WITHDRAWN_BY: ${JSON.stringify(WITHDRAWN_BY)}
+                )
+                        {
+                          _id,
+                          SOLICITATION_ID,
+                          SOLICITATION_NUMBER,
+                          PUBLICATION_APPROVAL,
+                          FISCAL_YEAR,
+                          OMNIBUS_NUMBER,
+                          TITLE,
+                          REVIEW_DATE,
+                          SELECTION_DATE,
+                          RELEASE_DATE,
+                          CLOSE_DATE,
+                          ANNOUNCEMENT_TYPE,
+                          CONTAINER_TYPE,
+                          AUTHORIZED_BY,
+                          WITHDRAWAL_REASON,
+                          WITHDRAWAL_DATE,
+                          WITHDRAWN_BY
+                        }
+                }`
             }
-          }
-        )
+        })
+        .then(response => {
+            // console.log('++++++++++ Gateway: addSolicitation success:' + JSON.stringify(response.data));
+            console.log('++++++++++ Gateway: addSolicitation success');
+            resolve(response.data.data.addSolicitation);
+        })
+        .catch(error => {
+          console.log('++++++++++ Gateway: addSolicitation error:' + error);
+          reject(error);
+        });
     })
 };
 
+
 const deleteSolicitation = (solId) => {
-  console.log('$$$$$$$$ deleteSolicitation solId: ' + solId);
+  console.log('---------- deleteSolicitation solId: ' + solId);
     return new Promise((resolve, reject) => {
-        Solicitations.findByIdAndRemove(solId, (err, solicitation) => {
-            if (err) {
-              console.log('^^^^^ deleteSolicitation Error: ' + err);
-              console.log('^^^^^ deleteSolicitation Error res: ' + solicitation);
-              reject({
-                id: solId,
-                result: undefined,
-                error: err
-              });
-            } else {
-              // console.log('^^^^^ Solicitation deleted with id: ' + solId);
-              console.log('^^^^^ Solicitation deleted: ' + solicitation);
-              resolve({
-                id: solId,
-                result: solicitation?`DELETE SUCCESS for id:${solicitation._id}`:undefined,
-                error: solicitation?undefined:`DELETE FAILED not found solicitation id:${solId}`
-              });
+      axios({
+          url: `${solicitationsServiceUrl}/graphql`,
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          // headers: { 'Content-Type': 'application/graphql' },
+          data: {
+            query: `mutation { deleteSolicitation (
+                  _id: ${JSON.stringify(solId)}
+                )
+                        {
+                          id,
+                          result,
+                          error
+                        }
+                }`
             }
-          }
-        )
+        })
+        .then(response => {
+            // console.log('---------- Gateway: addSolicitation success:' + JSON.stringify(response.data));
+            console.log('---------- Gateway: deleteSolicitation success');
+            resolve(response.data.data.deleteSolicitation);
+        })
+        .catch(error => {
+          console.log('---------- Gateway: deleteSolicitation error:' + error);
+          reject(error);
+        });
     })
 };
 

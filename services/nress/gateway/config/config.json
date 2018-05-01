@@ -1,6 +1,8 @@
 {
-  "users_address": "http://192.168.56.1:30333",
-  "users_address2": "http://192.168.56.1:3333",
+  "users_address2": "http://192.168.56.1:30333",
+  "users_address": "http://192.168.56.1:3333",
   "solicitations_address": "http://192.168.56.1:3334",
-  "solicitations_address2": "http://192.168.56.1:30334/"
+  "solicitations_address2": "http://192.168.56.1:30334/",
+  "reviews_address": "http://192.168.56.1:3335",
+  "reviews_address2": "http://192.168.56.1:30335/"
 }
