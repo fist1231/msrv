@@ -23,7 +23,30 @@ const schema = `
     reviewProposalsSearch(filter: String, first: Int): [ReviewProposal],
     reviewProposalById(id: String, first: Int): [ReviewProposal]
   }
-  type ReviewProposal { ASSIGNED_RESPONSE_ID: String!, FIRST_NAME: String, LAST_NAME: String, RESPONSE_NUMBER: String, RESPONSE_SEQ_NUMBER: String, PSTATE: String, GENERATED_STATUS: String, PANEL_ID: String, ACRONYM: String, EVALUATION_STATUS: String}
+  type ReviewProposal {
+    ASSIGNED_RESPONSE_ID: String!,
+    GENERATED_STATUS: String,
+    PANEL_ID: String,
+    ACRONYM: String,
+    RESPONSE_NUMBER: String,
+    RESPONSE_SEQ_NUMBER: String,
+    NSPIRES_USER_ID: String,
+    FIRST_NAME: String,
+    LAST_NAME: String,
+    EVALUATION_FORM_ID: String,
+    QUESTIONNAIRE: String,
+    EVALUATION_STATUS: String,
+    GRADE: String,
+    SCORING_METHOD_ID: String,
+    PANEL_PROPOSAL_ID: String,
+    PSTATE: String,
+    p_first_name: String,
+    p_last_name: String,
+    s_first_name: String,
+    s_last_name: String,
+    np_first_name: String,
+    np_last_name: String
+  }
 `;
 
 /*
