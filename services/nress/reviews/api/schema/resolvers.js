@@ -312,59 +312,59 @@ const rootResolvers  = {
 export default resolvers;
 
 
-const query2= `
+const query= `
 select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
-            "N" as GENERATED_STATUS,
-            "pan_id" as PANEL_ID,
-            "pan_acro" as ACRONYM,
-            "user id" as NSPIRES_USER_ID,
+            'N' as GENERATED_STATUS,
+            'pan_id' as PANEL_ID,
+            'pan_acro' as ACRONYM,
+            'user id' as NSPIRES_USER_ID,
             ap.RESPONSE_NUMBER as RESPONSE_NUMBER,
             ap.RESPONSE_SEQ_NUMBER as RESPONSE_SEQ_NUMBER,
             ap.FIRST_NAME as FIRST_NAME,
             ap.LAST_NAME as LAST_NAME,
-            "form id" as EVALUATION_FORM_ID,
-            "questionnaire" as QUESTIONNAIRE,
-            "draft" as EVALUATION_STATUS,
-            "good" as GRADE,
-            "numberic" as SCORING_METHOD_ID,
-            "proposal id" as PANEL_PROPOSAL_ID,
+            'form id' as EVALUATION_FORM_ID,
+            'questionnaire' as QUESTIONNAIRE,
+            'draft' as EVALUATION_STATUS,
+            'good' as GRADE,
+            'numberic' as SCORING_METHOD_ID,
+            'proposal id' as PANEL_PROPOSAL_ID,
             ap.PSTATE as PSTATE,
-            "primary_rev first" as p_first_name,
-            "primary_rev last" as p_last_name,
-            "secondary_rev fi" as s_first_name,
-            "secondary_rev la" as s_last_name,
-            "non_panelist_rev frs" as np_first_name,
-            "non_panelist_rev lst" as np_last_name
+            'primary_rev first' as p_first_name,
+            'primary_rev last' as p_last_name,
+            'secondary_rev fi' as s_first_name,
+            'secondary_rev la' as s_last_name,
+            'non_panelist_rev frs' as np_first_name,
+            'non_panelist_rev lst' as np_last_name
         from
             nspires_prod.ASSIGNED_RESPONSE ap
         where 'abc' != :id
 `
 
-const detailsQuery2= `
+const detailsQuery= `
 select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
-            "N" as GENERATED_STATUS,
-            "pan_id" as PANEL_ID,
-            "pan_acro" as ACRONYM,
-            "user id" as NSPIRES_USER_ID,
+            'N' as GENERATED_STATUS,
+            'pan_id' as PANEL_ID,
+            'pan_acro' as ACRONYM,
+            'user id' as NSPIRES_USER_ID,
             ap.RESPONSE_NUMBER as RESPONSE_NUMBER,
             ap.RESPONSE_SEQ_NUMBER as RESPONSE_SEQ_NUMBER,
             ap.FIRST_NAME as FIRST_NAME,
             ap.LAST_NAME as LAST_NAME,
-            "form id" as EVALUATION_FORM_ID,
-            "questionnaire" as QUESTIONNAIRE,
-            "draft" as EVALUATION_STATUS,
-            "good" as GRADE,
-            "numberic" as SCORING_METHOD_ID,
-            "proposal id" as PANEL_PROPOSAL_ID,
+            'form id' as EVALUATION_FORM_ID,
+            'questionnaire' as QUESTIONNAIRE,
+            'draft' as EVALUATION_STATUS,
+            'good' as GRADE,
+            'numberic' as SCORING_METHOD_ID,
+            'proposal id' as PANEL_PROPOSAL_ID,
             ap.PSTATE as PSTATE,
-            "primary_rev first" as p_first_name,
-            "primary_rev last" as p_last_name,
-            "secondary_rev fi" as s_first_name,
-            "secondary_rev la" as s_last_name,
-            "non_panelist_rev frs" as np_first_name,
-            "non_panelist_rev lst" as np_last_name
+            'primary_rev first' as p_first_name,
+            'primary_rev last' as p_last_name,
+            'secondary_rev fi' as s_first_name,
+            'secondary_rev la' as s_last_name,
+            'non_panelist_rev frs' as np_first_name,
+            'non_panelist_rev lst' as np_last_name
         from
             nspires_prod.ASSIGNED_RESPONSE ap
         where
@@ -372,7 +372,7 @@ select
             and 'abc' != :structureId
 `
 
-const query= `
+const query2= `
 select * from
         ( select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
@@ -533,7 +533,7 @@ TUS', 'SELECTABLE_STATUS', 'AWARDED_STATUS', 'COMPLETED_STATUS'
 `
 
 
-const detailsQuery= `
+const detailsQuery2= `
 select * from
         ( select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
