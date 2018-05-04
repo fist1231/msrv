@@ -126,8 +126,8 @@ sudo docker rmi pod-name-id
 
 ##################################################################################
 =================== Deployment to k8s ==================
-1.
-npm install pm2 -save
+1. no longer used
+#npm install pm2 -save
 
 2.
 create Dockerfile
@@ -149,8 +149,13 @@ git pull origin master
 cd services/nress/users
 
 5. build production:
-npm run build
-sudo cp -a ./config/. ./build/config/.
+sudo npm install
+
+remove build dir content: cd build
+rm -R ./*
+
+sudo npm run build
+sudo cp -R ./config ./build
 
 To test start:
 node ./build/index.js

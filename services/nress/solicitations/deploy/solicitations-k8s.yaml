@@ -1,0 +1,48 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: solicitations-node
+  name: solicitations-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: solicitations-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: solicitations-node
+    spec:
+      containers:
+      - image: $DNAME:443/solicitations-node:v1
+        name: solicitations-node
+        imagePullPolicy: Always
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: solicitations-node
+    name: solicitations-node-service
+  name: solicitations-node-service
+spec:
+  ports:
+  - nodePort: 30334
+    # The port that this service should serve on.
+    port: 3334
+    protocol: TCP
+    targetPort: 3334
+    nodePort: 30334
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: solicitations-node
+  type: NodePort
+  

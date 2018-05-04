@@ -54,7 +54,7 @@ npm run test-server
 
 
 =================== Deployment to k8s ==================
-npm install pm2 -save
+# npm install pm2 -save
 create Dockerfile
 create process.yml
 create service and deployment yamls
@@ -82,6 +82,73 @@ Firewall:
 ========
 Regular cmd (not admin)
 .\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "solicitations:tcp:[]:30334:[10.0.2.5]:30334"
+
+
+##################################################################################
+=================== Deployment to k8s ==================
+1. no longer used
+#npm install pm2 -save
+
+2.
+create Dockerfile
+create process.yml
+create service and deployment yamls: solicitations-k8s.yaml
+
+3.
+Delete existing, if necessary:
+=======
+kubectl delete service solicitations-node-service
+kubectl delete deployment solicitations-node
+
+sudo docker rmi solicitations-node:v1
+sudo docker rmi ubt-master:443/solicitations-node:v1
+
+4. Checkout code from git/hub into dir on server:
+cd ~/repo/msrv
+git pull origin master
+cd services/nress/solicitations
+
+5. build production:
+sudo npm install
+
+remove build dir content: cd build
+rm -R ./*
+
+sudo npm run build
+sudo cp -R ./config ./build
+
+To test start:
+node ./build/index.js
+
+6.
+Docker:
+======
+sudo docker build -t solicitations-node:v1 .
+sudo docker tag solicitations-node:v1 ubt-master:443/solicitations-node:v1
+sudo docker push ubt-master:443/solicitations-node:v1
+
+K8s:
+====
+cd  ./deploy
+
+// Add $DNAME to solicitations-node.yaml image: prop
+export DNAME="ubt-master" && envsubst < solicitations-k8s.yaml | kubectl create -f -
+
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
+Firewall:
+========
+Regular cmd (not admin)
+.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "solicitations:tcp:[]:30334:[10.0.2.5]:30334"
+
+Test in browser:
+http://192.168.56.1:30334/nress/solicitations
+
+####################################################################################
+
+
 
 
 Prod build:
