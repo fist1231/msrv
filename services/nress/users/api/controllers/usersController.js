@@ -1,6 +1,5 @@
 'use strict';
 
-
 var mongoose = require('mongoose'),
 Users = mongoose.model('Users');
 
@@ -15,8 +14,6 @@ exports.list_all_users = function(req, res) {
 };
 
 exports.filter_users = function(req, res) {
-
-
 	 if(!req.params.username) {
 		 console.log('Term is empty');
 		  Users.find({}, function(err, user) {
@@ -77,13 +74,26 @@ exports.read_a_user = function(req, res) {
 
 exports.update_a_user = function(req, res) {
   console.log('update_a_user call: id='+ req.params.userId);
+  // console.log('... users service update_a_user call: req.body.user.FIRST_NAME='+JSON.stringify(req.body.user));
+  Users.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true}, function(err, user) {
+    if (err) {
+    	console.log('update_a_user error: ' + err);
+      return res.send(err);
+    }
+    res.json(user);
+  });
+};
+
+/*
+exports.update_a_user = function(req, res) {
+  console.log('update_a_user call: id='+ req.params.userId);
   console.log('... users service update_a_user call: req.body.user.FIRST_NAME='+JSON.stringify(req.body.user));
   Users.findByIdAndUpdate({_id: req.params.userId},
     {
       $set: {
         "FIRST_NAME": req.body.user.firstName,
         "LAST_NAME": req.body.user.lastName,
-        "USERNAME": req.body.user.username 
+        "USERNAME": req.body.user.username
       }
     }, {new: true}, function(err, user) {
     if (err) {
@@ -94,7 +104,7 @@ exports.update_a_user = function(req, res) {
     res.json(user);
   });
 };
-
+*/
 
 exports.delete_a_user = function(req, res) {
   Users.remove({

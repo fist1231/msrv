@@ -11,6 +11,7 @@ exports.list_all_users = function(req, res) {
   console.log('********** Gateway: list_all_users called #######');
   // res.json(sols);
   const targetUrl = usersServiceUrl + req.originalUrl;
+  console.log('********** Gateway: list_all_users targetUrl='+ targetUrl);
   axios
     .get(targetUrl)
     .then(response => {
@@ -55,7 +56,7 @@ exports.read_a_user = function(req, res) {
   axios
     .get(targetUrl)
     .then(response => {
-      console.log('********** Gateway: read_a_user result:' + JSON.stringify(response.data));
+      // console.log('********** Gateway: read_a_user result:' + JSON.stringify(response.data));
       res.json(response.data);
     })
     .catch(error => {
@@ -67,7 +68,7 @@ exports.read_a_user = function(req, res) {
 
 exports.update_a_user = function(req, res) {
   console.log('********** Gateway: update_a_user called #######');
-  console.log('********** Gateway: update_a_user id:' + JSON.stringify(req.body));
+  console.log('********** Gateway: update_a_user:' + JSON.stringify(req.body));
   // console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
   // console.log('********** Gateway: filter_users url=' + req.url);
   // res.json(sols);
@@ -75,9 +76,7 @@ exports.update_a_user = function(req, res) {
   console.log('********** Gateway: update_a_user targetUrl=' + targetUrl);
 
   axios
-    .put(targetUrl, {
-      user: req.body.user
-    })
+    .put(targetUrl, req.body.user)
     .then(response => {
       console.log('********** Gateway: update_a_user result:' + JSON.stringify(response.data));
       res.json(response.data);
