@@ -70,6 +70,71 @@ Firewall:
 Regular cmd (not admin)
 .\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "solicitations:tcp:[]:30334:[10.0.2.5]:30334"
 
+##################################################################################
+=================== Deployment to k8s ==================
+1. no longer used
+#npm install pm2 -save
+
+2.
+create Dockerfile
+create process.yml
+create service and deployment yamls: reviews-k8s.yaml
+
+3.
+Delete existing, if necessary:
+=======
+kubectl delete service reviews-node-service
+kubectl delete deployment reviews-node
+
+sudo docker rmi reviews-node:v1
+sudo docker rmi ubt-master:443/reviews-node:v1
+
+4. Checkout code from git/hub into dir on server:
+cd ~/repo/msrv
+git pull origin master
+cd services/nress/reviews
+
+5. build production:
+sudo npm install
+
+remove build dir content: cd build
+sudo rm -Rf ./*
+
+sudo npm run build
+sudo cp -R ./config ./build
+
+To test start:
+node ./build/index.js
+
+6.
+Docker:
+======
+sudo docker build -t reviews-node:v1 .
+sudo docker tag reviews-node:v1 ubt-master:443/reviews-node:v1
+sudo docker push ubt-master:443/reviews-node:v1
+
+K8s:
+====
+cd  ./deploy
+
+// Add $DNAME to reviews-node.yaml image: prop
+export DNAME="ubt-master" && envsubst < reviews-k8s.yaml | kubectl create -f -
+
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
+Firewall:
+========
+Regular cmd (not admin)
+.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "reviews:tcp:[]:30335:[10.0.2.5]:30335"
+
+Test in browser:
+http://192.168.56.1:30333/nress/reviews
+
+####################################################################################
+
+
 
 Prod build:
 ===========
@@ -79,9 +144,11 @@ del -r build/*
 
 npm install --save-dev babel-preset-es3 babel-preset-es2015-mod babel-plugin-transform-runtime
 npm install --save-dev babel-preset-es2015-mod
-npm install --save-dev babel-plugin-transform-runtime
-npm install babel-plugin-uglify --save-dev
-npm uninstall babel-plugin-uglify --save-dev
+#npm install --save-dev babel-plugin-transform-runtime
+#npm install babel-plugin-uglify --save-dev
+#npm uninstall babel-plugin-uglify --save-dev
+npm install babel-minify --save-dev
+npm install babel-plugin-transform-minify-booleans --save-dev
 
 Add to .bablerc:
 ================

@@ -152,7 +152,7 @@ cd services/nress/users
 sudo npm install
 
 remove build dir content: cd build
-rm -R ./*
+sudo rm -Rf ./*
 
 sudo npm run build
 sudo cp -R ./config ./build
@@ -201,8 +201,8 @@ del -r build/*
 
 npm install --save-dev babel-preset-es3 babel-preset-es2015-mod babel-plugin-transform-runtime
 npm install --save-dev babel-preset-es2015-mod
-npm install --save-dev babel-plugin-transform-runtime
-npm install babel-plugin-uglify --save-dev
+#npm install --save-dev babel-plugin-transform-runtime
+#npm install babel-plugin-uglify --save-dev
 #npm uninstall babel-plugin-uglify --save-dev
 npm install babel-minify --save-dev
 npm install babel-plugin-transform-minify-booleans --save-dev

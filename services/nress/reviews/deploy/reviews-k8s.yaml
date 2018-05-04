@@ -1,0 +1,47 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: reviews-node
+  name: reviews-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: reviews-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: reviews-node
+    spec:
+      containers:
+      - image: $DNAME:443/reviews-node:v1
+        name: reviews-node
+        imagePullPolicy: Always
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: reviews-node
+    name: reviews-node-service
+  name: reviews-node-service
+spec:
+  ports:
+  - nodePort: 30335
+    # The port that this service should serve on.
+    port: 3335
+    protocol: TCP
+    targetPort: 3335
+    nodePort: 30335
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: reviews-node
+  type: NodePort
