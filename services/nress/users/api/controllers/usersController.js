@@ -52,8 +52,8 @@ exports.create_a_user = function(req, res) {
 
 
 exports.find_user = function(req, res) {
-		 console.log('Term not empty: ');
-		  Users.find({'id': req.params.userid}, function(err, user) {
+		 console.log('find_user Term not empty ');
+		  Users.find({'_id': req.params.userId}, function(err, user) {
 			    if (err) {
 			    	console.log('find_user error: ' + err);
 			    	return res.send(err);
@@ -63,22 +63,34 @@ exports.find_user = function(req, res) {
 	};
 
 exports.read_a_user = function(req, res) {
+  console.log('read_a_user call, id: ' + req.params.userId);
   Users.findById(req.params.userId, function(err, user) {
     if (err) {
     	console.log('read_a_user error: ' + err);
     	return res.send(err);
     }
+    // console.log('read_a_user found');
     res.json(user);
   });
 };
 
 
 exports.update_a_user = function(req, res) {
-  Users.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true}, function(err, user) {
+  console.log('update_a_user call: id='+ req.params.userId);
+  console.log('... users service update_a_user call: req.body.user.FIRST_NAME='+JSON.stringify(req.body.user));
+  Users.findByIdAndUpdate({_id: req.params.userId},
+    {
+      $set: {
+        "FIRST_NAME": req.body.user.firstName,
+        "LAST_NAME": req.body.user.lastName,
+        "USERNAME": req.body.user.username 
+      }
+    }, {new: true}, function(err, user) {
     if (err) {
     	console.log('update_a_user error: ' + err);
       return res.send(err);
     }
+    // console.log('********** Gateway: update_a_user result:' + JSON.stringify(res.user));
     res.json(user);
   });
 };

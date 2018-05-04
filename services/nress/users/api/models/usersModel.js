@@ -4,10 +4,6 @@ var Schema = mongoose.Schema;
 
 
 var UserSchema = new Schema({
-  _id: {
-	    type: String,
-	    required: 'Kindly enter id of the user'
-	  },
   USERNAME: {
     type: String,
     required: 'Kindly enter the USERNAME of the user'

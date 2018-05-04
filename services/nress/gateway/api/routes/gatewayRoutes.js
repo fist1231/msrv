@@ -57,13 +57,13 @@ module.exports = function(app) {
     .post(usersList.create_a_user);
 
 
-  // app.route('/nress/users/:userId')
-  //   .get(usersList.read_a_user)
-  //   .get(usersList.filter_users)
-  //   .put(usersList.update_a_user)
-  //   .delete(usersList.delete_a_user);
-  //
-  //
+  app.route('/nress/users/:userId')
+    .get(usersList.read_a_user)
+    // .get(usersList.filter_users)
+    .put(usersList.update_a_user);
+    // .delete(usersList.delete_a_user);
+
+
   app.route('/nress/search')
   .get(usersList.list_all_users);
 

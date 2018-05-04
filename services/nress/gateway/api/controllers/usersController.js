@@ -28,8 +28,8 @@ exports.create_a_user = function(req, res) {
 
 exports.filter_users = function(req, res) {
   console.log('********** Gateway: filter_users called #######');
-  console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
-  console.log('********** Gateway: filter_users url=' + req.url);
+  // console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
+  // console.log('********** Gateway: filter_users url=' + req.url);
   // res.json(sols);
   const targetUrl = usersServiceUrl + req.originalUrl;
 
@@ -43,6 +43,51 @@ exports.filter_users = function(req, res) {
       console.log('********** Gateway: filter_users error:' + error);
     });
 };
+
+
+exports.read_a_user = function(req, res) {
+  console.log('********** Gateway: read_a_user called #######');
+  // console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
+  // console.log('********** Gateway: filter_users url=' + req.url);
+  // res.json(sols);
+  const targetUrl = usersServiceUrl + req.originalUrl;
+
+  axios
+    .get(targetUrl)
+    .then(response => {
+      console.log('********** Gateway: read_a_user result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: read_a_user error:' + error);
+    });
+};
+
+
+
+exports.update_a_user = function(req, res) {
+  console.log('********** Gateway: update_a_user called #######');
+  console.log('********** Gateway: update_a_user id:' + JSON.stringify(req.body));
+  // console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
+  // console.log('********** Gateway: filter_users url=' + req.url);
+  // res.json(sols);
+  const targetUrl = usersServiceUrl + req.originalUrl;
+  console.log('********** Gateway: update_a_user targetUrl=' + targetUrl);
+
+  axios
+    .put(targetUrl, {
+      user: req.body.user
+    })
+    .then(response => {
+      console.log('********** Gateway: update_a_user result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: update_a_user error:' + error);
+    });
+};
+
+
 
 
 /*

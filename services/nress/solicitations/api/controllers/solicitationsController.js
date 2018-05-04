@@ -62,6 +62,7 @@ exports.find_solicitation = function(req, res) {
 	};
 
 exports.read_solicitation = function(req, res) {
+  console.log('read_solicitation call, id: ' + req.params.solicitationId);
   Solicitations.findById(req.params.solicitationId, function(err, solicitation) {
     if (err) {
     	console.log('read_solicitation error: ' + err);
