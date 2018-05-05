@@ -87,6 +87,9 @@ kubectl delete service reviews-node-service
 kubectl delete deployment reviews-node
 
 sudo docker rmi reviews-node:v1
+# or with force:
+sudo docker rmi -f reviews-node:v1
+
 sudo docker rmi ubt-master:443/reviews-node:v1
 
 4. Checkout code from git/hub into dir on server:
@@ -97,14 +100,35 @@ cd services/nress/reviews
 5. build production:
 sudo npm install
 
+Oracledb will fail, so run:
+npm install -oracledb --unsafe-perm=true --allow-root
+
 remove build dir content: cd build
 sudo rm -Rf ./*
 
 sudo npm run build
+
+copy config lines to config.js
 sudo cp -R ./config ./build
 
+~~~~~~~~~~~ oracledb install ~~~~~~~~~~~~~~~~~~~~
+download oracledb client for linux: https://oracle.github.io/odpi/doc/installation.html#linux
+sudo apt install unzip
+install zip to ./reviews root
+unzip instantclient-basic-linux.x64-11.2.0.4.0.zip -d ./
+cd instantclient_11_2
+ln -s libclntsh.so.11.1 libclntsh.so
+ln -s libocci.so.11.1 libocci.so
+
+sudo apt-get update
+sudo apt-get install libaio1
+
+#export LD_LIBRARY_PATH=/opt/oracle/instantclient_11_2:$LD_LIBRARY_PATH
+#export PATH=/opt/oracle/instantclient_11_2:$PATH
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To test start:
-node ./build/index.js
+export LD_LIBRARY_PATH=./instantclient_11_2 && node ./build/index.js
 
 6.
 Docker:
@@ -112,6 +136,11 @@ Docker:
 sudo docker build -t reviews-node:v1 .
 sudo docker tag reviews-node:v1 ubt-master:443/reviews-node:v1
 sudo docker push ubt-master:443/reviews-node:v1
+
+test:
+sudo docker run --privileged reviews-node:v1
+or command line:
+sudo docker run -i -t -p 3335:3335 --network=host reviews-node:v1 /bin/bash
 
 K8s:
 ====
