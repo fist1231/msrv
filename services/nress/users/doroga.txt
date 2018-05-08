@@ -167,6 +167,8 @@ sudo docker build -t users-node:v1 .
 sudo docker tag users-node:v1 ubt-master:443/users-node:v1
 sudo docker push ubt-master:443/users-node:v1
 
+docker run -i -t -p 3335:3335 --network=host kube-master1:443/reviews-node:v1 /bin/bash
+
 K8s:
 ====
 cd  ./deploy
