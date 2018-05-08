@@ -59,7 +59,11 @@ mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://192.168.1.169:27017/nress_db', {
 //mongoose.connect('mongodb://192.168.56.1:27017/nress_db', {
 mongoose.connect(config.db_connect , {
-  useMongoClient: true
+  useMongoClient: true,
+  // sets how many times to try reconnecting
+  reconnectTries: Number.MAX_VALUE,
+  // sets the delay between every retry (milliseconds)
+  reconnectInterval: 1000
 });
 
 
