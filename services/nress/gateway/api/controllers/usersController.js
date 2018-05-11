@@ -87,6 +87,35 @@ exports.update_a_user = function(req, res) {
 };
 
 
+exports.find_user = function(req, res) {
+  console.log('********** Gateway: find_user called #######');
+  console.log('********** Gateway: find_user:' + JSON.stringify(req.body));
+  // console.log('********** Gateway: filter_users originalUrl=' + req.originalUrl);
+  // console.log('********** Gateway: filter_users url=' + req.url);
+  // res.json(sols);
+  const targetUrl = usersServiceUrl + req.originalUrl;
+  console.log('********** Gateway: find_user targetUrl=' + targetUrl);
+
+  axios
+    .get(targetUrl)
+    .then(response => {
+      // console.log('********** Gateway: find_user result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: find_user error:' + error);
+    });
+
+     //
+		 // console.log('Term not empty: ');
+		 //  Users.find({'id': req.params.userid}, function(err, user) {
+			//     if (err) {
+			//     	console.log('find_user error: ' + err);
+			//     	return res.send(err);
+			//     }
+			//     res.json(user);
+			//   });
+	};
 
 
 /*

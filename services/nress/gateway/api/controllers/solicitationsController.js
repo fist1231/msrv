@@ -2,7 +2,7 @@
 import axios from 'axios';
 import config from '../../config/config.json'
 
-const url = "http://localhost:3334/nress/solicitations";
+// const url = "http://localhost:3334/nress/solicitations";
 const solicitationsServiceUrl = `${config.solicitations_address}`;
 
 
@@ -21,6 +21,42 @@ exports.list_all_solicitations = function(req, res) {
         console.log('********** Gateway: list_all_solicitations error:' + error);
       });
 };
+
+exports.filter_solicitations = function(req, res) {
+
+  console.log('********** Gateway: filter_solicitations called #######');
+  // res.json(sols);
+  // const targetUrl = solicitationsServiceUrl + req.originalUrl;
+  const targetUrl = solicitationsServiceUrl + req.originalUrl.substring(0, 6) + req.originalUrl.substring(20);
+  console.log('********** Gateway: filter_solicitations targetUrl='+targetUrl);
+
+  axios
+    .get(targetUrl)
+    .then(response => {
+      // console.log('********** Gateway: filter_solicitations result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: filter_solicitations error:' + error);
+    });
+	};
+
+  exports.find_solicitation = function(req, res) {
+    console.log('********** Gateway: find_solicitation called #######');
+    // res.json(sols);
+    const targetUrl = solicitationsServiceUrl + req.originalUrl;
+
+    axios
+      .get(targetUrl)
+      .then(response => {
+        // console.log('********** Gateway: find_solicitation result:' + JSON.stringify(response.data));
+        res.json(response.data);
+      })
+      .catch(error => {
+        console.log('********** Gateway: find_solicitation error:' + error);
+      });
+  	};
+
 
 exports.create_solicitation = function(req, res) {
   console.log('********** Gateway: create_solicitation called #######');

@@ -1,6 +1,42 @@
 'use strict';
-
+import axios from 'axios';
 import config from '../../config/config.json'
+
+const reviewsServiceUrl = `${config.reviews_address}`;
+
+exports.list_all_reviewProposals = function(req, res) {
+  console.log('********** Gateway: list_all_reviewProposals called #######');
+  // res.json(sols);
+  const targetUrl = reviewsServiceUrl + req.originalUrl;
+  console.log('********** Gateway: list_all_reviewProposals targetUrl='+ targetUrl);
+  axios
+    .get(targetUrl)
+    .then(response => {
+      // console.log('********** Gateway: list_all_reviewProposals result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: list_all_reviewProposals error:' + error);
+    });
+};
+
+exports.find_reviewProposal = function(req, res) {
+  console.log('********** Gateway: find_reviewProposal called #######');
+  // res.json(sols);
+  const targetUrl = reviewsServiceUrl + req.originalUrl;
+  console.log('********** Gateway: find_reviewProposal targetUrl='+ targetUrl);
+  axios
+    .get(targetUrl)
+    .then(response => {
+      // console.log('********** Gateway: find_reviewProposal result:' + JSON.stringify(response.data));
+      res.json(response.data);
+    })
+    .catch(error => {
+      console.log('********** Gateway: find_reviewProposal error:' + error);
+    });
+};
+
+
 
 /*
 exports.list_all_reviewProposals = function(req, res) {
