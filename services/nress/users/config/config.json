@@ -1,4 +1,5 @@
 {
-  "db_connect": "mongodb://192.168.56.1:27017/nress_db",
-  "db_connect_home" : "mongodb://192.168.1.169:27017/nress_db"
+  "db_connect_eh": "mongodb://192.168.56.1:27017/nress_db",
+  "db_connect_home" : "mongodb://192.168.1.169:27017/nress_db",
+  "db_connect" : "mongodb://192.168.1.18:27017/nress_db"
 }

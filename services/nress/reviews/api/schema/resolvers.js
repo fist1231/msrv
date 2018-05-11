@@ -312,7 +312,7 @@ const rootResolvers  = {
 export default resolvers;
 
 
-const query2= `
+const query= `
 select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
             'N' as GENERATED_STATUS,
@@ -341,7 +341,7 @@ select
         where 'abc' != :id
 `
 
-const detailsQuery2= `
+const detailsQuery= `
 select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
             'N' as GENERATED_STATUS,
@@ -372,7 +372,7 @@ select
             and 'abc' != :structureId
 `
 
-const query= `
+const query2= `
 select * from
         ( select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,
@@ -533,7 +533,7 @@ TUS', 'SELECTABLE_STATUS', 'AWARDED_STATUS', 'COMPLETED_STATUS'
 `
 
 
-const detailsQuery= `
+const detailsQuery2= `
 select * from
         ( select
             RAWTOHEX(ap.ASSIGNED_RESPONSE_ID) as ASSIGNED_RESPONSE_ID,

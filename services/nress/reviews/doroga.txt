@@ -100,6 +100,7 @@ cd services/nress/reviews
 5. build production:
 sudo npm install
 
+# sudo apt install python2.7 python-pip
 Oracledb will fail, so run:
 npm install -oracledb --unsafe-perm=true --allow-root
 
@@ -113,6 +114,10 @@ sudo cp -R ./config ./build
 
 ~~~~~~~~~~~ oracledb install ~~~~~~~~~~~~~~~~~~~~
 download oracledb client for linux: https://oracle.github.io/odpi/doc/installation.html#linux
+
+copy to lxc:
+sudo lxc file push instantclient-basic-linux.x64-11.2.0.4.0.zip kube-master1/root/repo/instantclient-basic-linux.x64-11.2.0.4.0.zip
+
 sudo apt install unzip
 install zip to ./reviews root
 unzip instantclient-basic-linux.x64-11.2.0.4.0.zip -d ./
@@ -142,6 +147,7 @@ sudo docker run --privileged reviews-node:v1
 or command line:
 sudo docker run -i -t -p 3335:3335 --network=host reviews-node:v1 /bin/bash
 
+
 K8s:
 ====
 cd  ./deploy
@@ -160,6 +166,9 @@ Regular cmd (not admin)
 
 Test in browser:
 http://192.168.56.1:30333/nress/reviews
+
+bash into pod:
+ kubectl exec -it reviews-node-5fb8b6864-jzff6 -- /bin/bash
 
 ####################################################################################
 
