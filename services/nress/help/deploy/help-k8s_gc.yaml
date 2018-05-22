@@ -1,0 +1,50 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: help-node
+  name: help-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: help-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: help-node
+    spec:
+      containers:
+      - image: gcr.io/gcpro1-10001110001/help-node:v1
+        name: help-node
+        ports:
+        - containerPort: 3336
+          protocol: TCP
+        imagePullPolicy: IfNotPresent
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: help-node
+    name: help-node-service
+  name: help-node-service
+spec:
+  ports:
+  - nodePort: 30336
+    # The port that this service should serve on.
+    port: 3336
+    protocol: TCP
+    targetPort: 3336
+    nodePort: 30336
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: help-node
+  type: LoadBalancer
