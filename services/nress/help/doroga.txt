@@ -170,3 +170,12 @@ kubectl delete deployment users-node
 
 sudo docker rmi users-node:v1
 sudo docker rmi ubt-master:443/users-node:v1
+
+
+******************************************* Google cloud build ************************
+
+gcloud auth configure-docker
+
+docker build -t help-node:v1 .
+docker tag help-node:v1 gcr.io/gcpro1-10001110001/help-node:v1
+docker push gcr.io/gcpro1-10001110001/help-node:v1
