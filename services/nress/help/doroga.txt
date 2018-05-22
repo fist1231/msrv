@@ -1,0 +1,171 @@
+npm init
+package.json
+
+server.js
+mkdir api, api/controller, api/routes
+
+npm install express --save
+npm install --save-dev nodemon
+npm install cors --save
+
+npm install --save-dev babel-cli babel-preset-es2015-mod babel-preset-env
+
+
+start:
+======
+npm run start
+
+
+
+Docker:
+======
+sudo docker build -t users-node:v1 .
+sudo docker tag users-node:v1 ubt-master:443/users-node:v1
+sudo docker push ubt-master:443/users-node:v1
+
+K8s:
+====
+cd  ./config
+//kubectl create -f users-node.yaml
+export DNAME="ubt-master" && envsubst < users-node.yaml | kubectl create -f -
+kubectl create -f user-node-service.yaml
+
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
+
+Spinoff:
+=======
+kubectl delete service users-node-service
+kubectl delete deployment users-node
+
+sudo docker rmi pod-name-id
+
+
+
+##################################################################################
+=================== Deployment to k8s ==================
+1. no longer used
+#npm install pm2 -save
+
+2.
+create Dockerfile
+create process.yml
+create service and deployment yamls: users-k8s.yaml
+
+3.
+Delete existing, if necessary:
+=======
+kubectl delete service users-node-service
+kubectl delete deployment users-node
+
+sudo docker rmi users-node:v1
+sudo docker rmi ubt-master:443/users-node:v1
+
+4. Checkout code from git/hub into dir on server:
+cd ~/repo/msrv
+git pull origin master
+cd services/nress/users
+
+5. build production:
+sudo npm install
+
+remove build dir content: cd build
+sudo rm -Rf ./*
+
+sudo npm run build
+sudo cp -R ./config ./build
+
+To test start:
+node ./build/index.js
+
+6.
+Docker:
+======
+sudo docker build -t users-node:v1 .
+sudo docker tag users-node:v1 ubt-master:443/users-node:v1
+sudo docker push ubt-master:443/users-node:v1
+
+docker run -i -t -p 3335:3335 --network=host kube-master1:443/reviews-node:v1 /bin/bash
+
+K8s:
+====
+cd  ./deploy
+
+// Add $DNAME to users-node.yaml image: prop
+export DNAME="ubt-master" && envsubst < users-k8s.yaml | kubectl create -f -
+
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
+Firewall:
+========
+Regular cmd (not admin)
+.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "users:tcp:[]:30333:[10.0.2.5]:30333"
+
+Test in browser:
+http://192.168.56.1:30333/nress/users
+
+####################################################################################
+
+
+
+
+
+
+Prod build:
+===========
+
+mkdir ./build
+del -r build/*
+
+npm install --save-dev babel-preset-es3 babel-preset-es2015-mod babel-plugin-transform-runtime
+npm install --save-dev babel-preset-es2015-mod
+#npm install --save-dev babel-plugin-transform-runtime
+#npm install babel-plugin-uglify --save-dev
+#npm uninstall babel-plugin-uglify --save-dev
+npm install babel-minify --save-dev
+npm install babel-plugin-transform-minify-booleans --save-dev
+
+Add to .bablerc:
+================
+"ignore": ["**/*.test.js", "node_modules"]
+
+Add to package.json:
+====================
+//"prebuild": "rm -rf build/*",
+//"prebuild": "del /r /f /q build"  // cmd
+"prebuild": "del -R -Force -Path build && mkdir build",  // powershell
+
+//"build": "babel . -d ./build -s && mkdir \"build/config\" && copy \"config/.\" \"build/config\"",
+"build": "babel --minified=true --presets=es2015 . -d ./build -s",
+
+"prestart": "npm build",
+//"start-prod": "NODE_ENV=production node ./build/index.js" - not working
+
+
+npm run build
+
+sudo cp -a ./config/. ./build/config/.
+
+start:
+node ./build/index.js
+
+pm2 start:
+=========
+pm2 start ./build/index.js
+pm2 list
+pm2 stop ./build/index.js
+pm2 delete $id
+pm2 kill
+
+
+Spinoff:
+=======
+kubectl delete service users-node-service
+kubectl delete deployment users-node
+
+sudo docker rmi users-node:v1
+sudo docker rmi ubt-master:443/users-node:v1

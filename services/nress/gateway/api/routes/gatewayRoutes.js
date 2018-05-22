@@ -3,6 +3,7 @@ module.exports = function(app) {
   var reviewProposalsList = require('../controllers/reviewProposalsController');
   var solicitationsList = require('../controllers/solicitationsController');
   var usersList = require('../controllers/usersController');
+  var helpList = require('../controllers/helpController');
 
 
   app.route('/nress/reviewProposals')
@@ -85,5 +86,19 @@ module.exports = function(app) {
   app.route('/nress/user/:userid')
     .get(usersList.find_user);
 
+
+// -------------------- help ---------------------------
+
+  app.route('/help')
+    .get(helpList.get_version_help);
+
+  app.route('/help/users')
+    .get(helpList.get_users_help);
+
+  app.route('/help/solicitations')
+    .get(helpList.get_solicitations_help);
+
+  app.route('/help/reviews')
+    .get(helpList.get_reviews_help);
 
 };

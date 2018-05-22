@@ -1,0 +1,9 @@
+{
+  "presets": ["env", "es2015"],
+  "ignore": ["**/*.test.js", "node_modules/**/*.*", "build/**/*.*"],
+  "env": {
+    "production": {
+      "presets": ["minify"]
+    }
+  }
+}

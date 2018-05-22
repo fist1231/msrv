@@ -1,11 +1,12 @@
 {
-  "users_address1": "http://192.168.56.1:30333",
-  "users_address": "http://192.168.56.1:3333",
-  "users_address2": "http://192.168.1.208:30333",
-  "solicitations_address1": "http://192.168.56.1:30334",
+  "users_address": "http://192.168.56.1:30333",
+  "users_address2": "http://192.168.56.1:3333",
+  "users_address3": "http://192.168.1.208:30333",
+  "solicitations_address": "http://192.168.56.1:30334",
   "solicitations_address2": "http://192.168.56.1:3334",
-  "solicitations_address": "http://192.168.1.208:30334",
-  "reviews_address1": "http://192.168.56.1:30335",
+  "solicitations_address3": "http://192.168.1.208:30334",
+  "reviews_address": "http://192.168.56.1:30335",
   "reviews_address2": "http://192.168.56.1:3335",
-  "reviews_address": "http://192.168.1.208:30335"
+  "reviews_address3": "http://192.168.1.208:30335",
+  "help_address": "http://192.168.56.1:3336"
 }
