@@ -1,0 +1,6 @@
+apps:
+  - script   : './build/index.js'
+    name     : 'Login-Node'
+    exec_mode: 'FORK'
+    instances: 1
+    watch: false
