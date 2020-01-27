@@ -179,3 +179,54 @@ gcloud auth configure-docker
 docker build -t help-node:v1 .
 docker tag help-node:v1 gcr.io/gcpro1-10001110001/help-node:v1
 docker push gcr.io/gcpro1-10001110001/help-node:v1
+
+kubectl create -f help-k8s_gc.yaml
+
+
+***************************************************************************************
+google cloud:
+https://cloud.google.com/kubernetes-engine/docs/quickstart
+
+C:\Google\CloudSDK>gcloud container clusters list
+NAME       LOCATION       MASTER_VERSION  MASTER_IP       MACHINE_TYPE   NODE_VERSION  NUM_NODES  STATUS
+cluster-1  us-central1-a  1.8.10-gke.0    104.197.251.95  n1-standard-1  1.8.10-gke.0  3          RUNNING
+
+gcloud container clusters get-credentials cluster-1
+
+to config kubectl and access cluster:
+gcloud container clusters get-credentials cluster-1 --zone=us-central1-a
+
+
+kubectl run hello-server --image gcr.io/google-samples/hello-app:1.0 --port 8080
+kubectl expose deployment hello-server --type "LoadBalancer"
+
+========================= Yaml =====================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2018-05-22T20:29:45Z
+  labels:
+    name: help-node-service
+    run: help-node
+  name: help-node-service
+  namespace: default
+  resourceVersion: "27625"
+  selfLink: /api/v1/namespaces/default/services/help-node-service
+  uid: dd70b276-5dfe-11e8-ab8a-42010a800053
+spec:
+  clusterIP: 10.11.246.198
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 30336
+    port: 3336
+    protocol: TCP
+    targetPort: 3336
+  selector:
+    run: help-node
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 35.192.104.101

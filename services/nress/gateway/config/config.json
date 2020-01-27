@@ -9,5 +9,7 @@
   "reviews_address2": "http://192.168.56.1:3335",
   "reviews_address3": "http://192.168.1.208:30335",
   "help_address2": "http://192.168.56.1:3336",
-  "help_address": "http://35.192.104.101:3336"
+  "help_address_old": "http://35.192.104.101:3336",
+  "help_address": "http://35.225.222.236:3336"
+
 }
