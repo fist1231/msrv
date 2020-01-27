@@ -1,0 +1,27 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: help-node
+  name: help-node
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: help-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: help-node
+    spec:
+      containers:
+      - image: ubt-master:443/help-node:v1
+        name: help-node
+        imagePullPolicy: Always
+        resources: {}
+status: {}

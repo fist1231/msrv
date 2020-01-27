@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: help-node
+    name: help-node-service
+  name: help-node-service
+spec:
+  ports:
+  - nodePort: 30336
+    # The port that this service should serve on.
+    port: 3336
+    protocol: TCP
+    targetPort: 3336
+    nodePort: 30336
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: help-node
+  type: NodePort

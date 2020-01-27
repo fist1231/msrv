@@ -101,6 +101,17 @@ kubectl get pods
 kubectl get deployments
 kubectl get service
 
+
+
+!!!!!!!!!!!!!!!!!!! Helm deploy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+helm init --client-only
+
+// make sure docker pard was done before and image is in the registry
+helm install ./help-node --name=help-node
+
+
+
 Firewall:
 ========
 Regular cmd (not admin)
