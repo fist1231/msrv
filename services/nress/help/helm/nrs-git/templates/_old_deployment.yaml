@@ -1,0 +1,41 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+# 384 is octal for 0600 permission
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nress-git
+  name: nress-git
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nress-git
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nress-git
+    spec:
+      volumes:
+        - name: nress-git-storage
+          persistentVolumeClaim:
+           claimName: nress-git-pv-claim    
+        - name: nress-git-ssh-key
+          persistentVolumeClaim:
+           claimName: nress-git-ssh-pv-claim    
+      containers:
+      - image: ubt-master:443/nress-git:v1
+        name: nress-git
+        imagePullPolicy: Always
+        resources: {}
+        volumeMounts:
+          - mountPath: "/nress-git"
+            name: nress-git-storage
+          - mountPath: "/home/tsa/.ssh"
+            name: nress-git-ssh-key
+            readOnly: true
+status: {}

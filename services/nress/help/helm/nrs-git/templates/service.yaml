@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: nress-git
+    name: nress-git-service
+  name: nress-git-service
+spec:
+  ports:
+  - nodePort: 32022
+    # The port that this service should serve on.
+    port: 22
+    protocol: TCP
+    targetPort: 22
+    nodePort: 32022
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: nress-git
+  type: LoadBalancer

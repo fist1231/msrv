@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: reviews-node
+    name: reviews-node-service
+  name: reviews-node-service
+spec:
+  ports:
+  - nodePort: 30335
+    # The port that this service should serve on.
+    port: 3335
+    protocol: TCP
+    targetPort: 3335
+    nodePort: 30335
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    run: reviews-node
+  type: NodePort

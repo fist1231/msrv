@@ -1,0 +1,27 @@
+# This file is combined service and deployment yaml. No need to run
+# two separate yamls
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: solicitations-node
+  name: solicitations-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: solicitations-node
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: solicitations-node
+    spec:
+      containers:
+      - image: ubt-master:443/solicitations-node:v1
+        name: solicitations-node
+        imagePullPolicy: Always
+        resources: {}
+status: {}
