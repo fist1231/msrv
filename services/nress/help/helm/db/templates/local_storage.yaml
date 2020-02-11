@@ -1,0 +1,7 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: mongo-help-sc
+provisioner: cluster.local/nsf-provisioner-nfs-server-provisioner
+parameters:
+  mountOptions: vers=4.1

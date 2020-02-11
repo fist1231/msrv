@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: help-db-pv-volume
+  labels:
+    type: local_help_db
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /storage/help-db
