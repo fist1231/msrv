@@ -84,9 +84,29 @@ async function run() {
   app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 
+/*  =============== Https version ========================= */
+
+/*
+  const https = require("https");
+  const fs = require("fs");
+  const options = {
+    key: fs.readFileSync("/home/stislin/nginx/certs/nginx-selfsigned.key", 'utf8'),
+    cert: fs.readFileSync("/home/stislin/nginx/certs/nginx-selfsigned.crt", 'utf8')
+  };
+  
+  const httpsServer = https.createServer(options, app);
+  httpsServer.listen(port, () => {
+    console.log('Nress Gateway REST/GraphQL API server started on https: ' + port);
+  });
+*/  
+ /* ======================================================= */
+
+
+/*  =============== Https version ========================= */
   app.listen(port, () => {
     console.log('Nress Gateway REST/GraphQL API server started on: ' + port);
   });
+/*  ======================================================= */
 
 }
 

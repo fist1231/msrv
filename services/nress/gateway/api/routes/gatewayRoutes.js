@@ -91,7 +91,7 @@ module.exports = function(app) {
 
   app.route('/help')
     .get(helpList.get_version_help);
-
+/*
   app.route('/help/users')
     .get(helpList.get_users_help);
 
@@ -100,5 +100,12 @@ module.exports = function(app) {
 
   app.route('/help/reviews')
     .get(helpList.get_reviews_help);
+
+  app.route('/help/calendar')
+    .get(helpList.get_calendar_help);
+*/
+
+  app.route('/help/search/:helpType')
+    .get(helpList.get_help);
 
 };

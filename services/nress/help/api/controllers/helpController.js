@@ -1,10 +1,22 @@
 'use strict';
 
+var mongoose = require('mongoose'),
+Demohelp = mongoose.model('Demohelpitem');
+
 exports.get_version_help = function(req, res) {
   console.log('get_global_help called');
-  res.json({version: '1.0', name: 'help', owner: 'tbd'});
+
+  Demohelp.find({}, function(err, user) {
+    if (err) {
+    	console.log('list_all_users error: ' + err);
+    	return res.send(err);
+    }
+    res.json(user);
+  });
+  // res.json({version: '1.0', name: 'help', owner: 'tbd'});
 };
 
+/*
 const userHelpItems = [
   "Search by Username.",
   "Additional User Details by clicking icon.",
@@ -49,3 +61,33 @@ exports.get_reviews_help = function(req, res) {
   console.log('get_reviews_help called');
   res.json({items: reviewsHelpItems});
 };
+
+const calendarHelpItems = [
+  "Calendar events are drag-and-drop and resizable",
+  "To move event to different date, rest the mouse pointer on the event until it becomes a hand pointer, and then drag and drop it to different location",
+  "To resize event, rest the mouse pointer on the event's left or right boundry until it becomes a resize pointer, and then drag the boundary",
+  "Calendat events data is for demonstration puropses only, and not stored in the database",
+  "Hide these Tips by clicking Get Help button again"
+]
+
+exports.get_calendar_help = function(req, res) {
+  console.log('get_calendar_help called');
+  res.json({items: calendarHelpItems});
+};
+*/
+
+exports.get_help = function(req, res) {
+  console.log(`req.params: ${JSON.stringify(req.params)}`);
+  console.log(`req.params.helpType: ${req.params.helpType}`);
+  if(!req.params.helpType) {
+    console.log('Term is empty');
+  }
+  Demohelp.find({'dh_type': req.params.helpType}, function(err, help) {
+    if (err) {
+      console.log('get_help error: ' + err);
+      return res.send(err);
+    }
+    // console.log('helpItems: ' + JSON.stringify(user));
+    res.json(help);
+  });
+ };

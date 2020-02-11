@@ -1,33 +1,33 @@
-// import config from './config/config.json'
+import config from './config/config.json'
 
-// var Rx = require('rxjs');
+var Rx = require('rxjs');
 
 var cors = require('cors');
 var express = require('express'),
 
 app = express(),
   port = process.env.PORT || 3336,
-  // mongoose = require('mongoose'),
-  // Users = require('./api/models/usersModel'), //created model loading here
+  mongoose = require('mongoose'),
+  Users = require('./api/models/helpModel'), //created model loading here
   bodyParser = require('body-parser');
 
 app.use(cors());
 
 
 // mongoose instance connection url connection
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost/nress_db');
 //mongoose.connect('mongodb://192.168.1.169:27017/nress_db', {
-// mongoose.connect(config.db_connect, {
-//   useMongoClient: true,
-//   // sets how many times to try reconnecting
-//   reconnectTries: Number.MAX_VALUE,
-//   // sets the delay between every retry (milliseconds)
-//   reconnectInterval: 1000
-//   // server: {
-//   //         }
-//
-// });
+mongoose.connect(config.db_connect, {
+  useMongoClient: true,
+  // sets how many times to try reconnecting
+  reconnectTries: Number.MAX_VALUE,
+  // sets the delay between every retry (milliseconds)
+  reconnectInterval: 1000
+  // server: {
+  //         }
+  
+});
 
 
 
@@ -45,21 +45,21 @@ routes(app); //register the route
 app.listen(port);
 
 
-// exports.getUsers = function() {
-//
-// 	var users = [{id: '101', name: 'name-1010', status: 'fake', created_date: new Date()}
-// 	, {id: '102', name: 'name-102', status: 'fake', created_date: new Date()}
-// 	, {id: '103', name: 'name-103', status: 'fake', created_date: new Date()}];
-//
-//
-// 	app.get('/dowork',function(res,req){
-// 	    console.log(req.params.msg);
-// 	  /... code to do your work .../
-// 	});
-//
-//
-// 	return Rx.Observable.of(users);
-// }
+exports.getUsers = function() {
+
+	var users = [{id: '101', name: 'name-1010', status: 'fake', created_date: new Date()}
+	, {id: '102', name: 'name-102', status: 'fake', created_date: new Date()}
+	, {id: '103', name: 'name-103', status: 'fake', created_date: new Date()}];
 
 
-console.log('Nhelp help REST API server started on: ' + port);
+	app.get('/dowork',function(res,req){
+	    console.log(req.params.msg);
+	  /... code to do your work .../
+	});
+
+
+	return Rx.Observable.of(users);
+}
+
+
+console.log('Nress users RESTful API server started on: ' + port);

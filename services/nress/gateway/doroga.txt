@@ -75,6 +75,20 @@ Prod build:
 mkdir ./build
 del -r build/*
 
+
+######## linux #######
+rm -R ./build
+npm run build
+cp -R ./config ./build/config
+
+cd build
+
+pm2 start index.js --name "gateway"
+pm2 stop gateway
+pm2 delete gateway
+pm2 list
+#####################
+
 npm install --save-dev babel-preset-es3 babel-preset-es2015-mod babel-plugin-transform-runtime
 npm install --save-dev babel-preset-es2015-mod
 npm install --save-dev babel-plugin-transform-runtime

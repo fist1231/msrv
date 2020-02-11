@@ -53,21 +53,21 @@ sudo docker rmi pod-name-id
 2.
 create Dockerfile
 create process.yml
-create service and deployment yamls: users-k8s.yaml
+create service and deployment yamls: help-k8s.yaml
 
 3.
 Delete existing, if necessary:
 =======
-kubectl delete service users-node-service
-kubectl delete deployment users-node
+kubectl delete service help-node-service
+kubectl delete deployment help-node
 
-sudo docker rmi users-node:v1
-sudo docker rmi ubt-master:443/users-node:v1
+sudo docker rmi help-node:v1
+sudo docker rmi ubt-master:443/help-node:v1
 
 4. Checkout code from git/hub into dir on server:
 cd ~/repo/msrv
 git pull origin master
-cd services/nress/users
+cd services/nress/help
 
 5. build production:
 sudo npm install
@@ -76,49 +76,55 @@ remove build dir content: cd build
 sudo rm -Rf ./*
 
 sudo npm run build
-sudo cp -R ./config ./build
 
 To test start:
 node ./build/index.js
+curl localhost:3336/help/users
+
 
 6.
 Docker:
 ======
-sudo docker build -t users-node:v1 .
-sudo docker tag users-node:v1 ubt-master:443/users-node:v1
-sudo docker push ubt-master:443/users-node:v1
+sudo docker build -t help-node:v1 .
+sudo docker tag help-node:v1 ubt-master:443/help-node:v1
+sudo docker push ubt-master:443/help-node:v1
 
-docker run -i -t -p 3335:3335 --network=host kube-master1:443/reviews-node:v1 /bin/bash
+docker run -i -t -p 3336:3336 --network=host ubt-master:443/help-node:v1 /bin/bash
 
 K8s:
 ====
+
+/* --------------- Use Helm instead ----------------------
 cd  ./deploy
 
 // Add $DNAME to users-node.yaml image: prop
 export DNAME="ubt-master" && envsubst < users-k8s.yaml | kubectl create -f -
-
-kubectl get pods
-kubectl get deployments
-kubectl get service
-
-
+ ------------------------------------------------------- */
 
 !!!!!!!!!!!!!!!!!!! Helm deploy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+## Go to Helm client (linux or win).
 
 helm init --client-only
 
 // make sure docker pard was done before and image is in the registry
 helm install ./help-node --name=help-node
 
+Verify:
+=======
+kubectl get pods
+kubectl get deployments
+kubectl get service
+
 
 
 Firewall:
 ========
 Regular cmd (not admin)
-.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "users:tcp:[]:30333:[10.0.2.5]:30333"
+.\VBoxManage.exe natnetwork modify --netname NatNetwork --port-forward-4 "help-node:tcp:[]:30336:[10.0.2.5]:30336"
 
 Test in browser:
-http://192.168.56.1:30333/nress/users
+http://192.168.56.1:30336/help/users
 
 ####################################################################################
 
@@ -241,3 +247,85 @@ status:
   loadBalancer:
     ingress:
     - ip: 35.192.104.101
+
+
+============================ Aws ================================
+
+sudo apt-get update
+sudo apt install awscli
+$(aws ecr get-login --no-include-email --region us-east-2)
+
+Docker:
+======
+sudo docker build -t help-node:v8 .
+sudo docker tag help-node:v8 303632807918.dkr.ecr.us-east-2.amazonaws.com/repo/help-node:v8
+sudo docker push 303632807918.dkr.ecr.us-east-2.amazonaws.com/repo/help-node:v8
+
+
+
+MongoDB:
+=======
+1. install
+2. mkdir c:\mongo\data
+3. "C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath c:\mongo\data
+4. start: "C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe"
+5. Commands:
+db - current db
+show dbs
+use nress_db - switch to db
+
+
+/// #################################################################################################################
+///                                      Mongoose on case sentivity
+/// #################################################################################################################
+/// Let’s assume the model is ‘Campaign’.
+/// mongodb collection name is case sensitive (‘Campaigns’ is different from ‘campaigns’)
+/// mongodb best practises is to have all lower case for collection name (‘campaigns’ is preferred)
+/// mongoose model name should be singular and upper case (‘Campaign’)
+/// mongoose will lowercase and pluralize with an ‘s’ so that it can access the collection (‘Campaign’ » ‘campaigns’)
+/// #################################################################################################################
+
+
+show collections
+db.getCollectionNames()
+db.createCollection("help")
+
+db.demohelpitems.insertOne( { dh_type: "CALENDAR", dh_text: "Calendar events are drag-and-drop and resizable (c)" } );
+db.demohelpitems.insertOne( { dh_type: "CALENDAR", dh_text: "To move event to different date, rest the mouse pointer on the event until it becomes a hand pointer, and then drag and drop it to different location" } );
+db.demohelpitems.insertOne( { dh_type: "CALENDAR", dh_text: "To resize event, rest the mouse pointer on the event's left or right boundry until it becomes a resize pointer, and then drag the boundary" } );
+db.demohelpitems.insertOne( { dh_type: "CALENDAR", dh_text: "Calendat events data is for demonstration puropses only, and not stored in the database" } );
+db.demohelpitems.insertOne( { dh_type: "CALENDAR", dh_text: "Hide these Tips by clicking Get Help button again" } );
+
+db.demohelpitems.insertOne( { dh_type: "SOLICITATIONS", dh_text: "Search by Soliciation Title (c)" } );
+db.demohelpitems.insertOne( { dh_type: "SOLICITATIONS", dh_text: "Fully functional CRUD operations: Add, Update and Delete Solicitation" } );
+db.demohelpitems.insertOne( { dh_type: "SOLICITATIONS", dh_text: "Live data from MongoDB Solicitations collection" } );
+db.demohelpitems.insertOne( { dh_type: "SOLICITATIONS", dh_text: "Hide these Tips by clicking Get Help button again" } );
+
+db.demohelpitems.insertOne( { dh_type: "USERS", dh_text: "Search by Username (c)" } );
+db.demohelpitems.insertOne( { dh_type: "USERS", dh_text: "Additional User Details by clicking icon" } );
+db.demohelpitems.insertOne( { dh_type: "USERS", dh_text: "Multisort by clicking Column Header while holding down Shift key" } );
+db.demohelpitems.insertOne( { dh_type: "USERS", dh_text: "To resize column, rest the mouse pointer on the header boundary until it becomes a resize pointer, and then drag the boundary" } );
+db.demohelpitems.insertOne( { dh_type: "USERS", dh_text: "Live data from MongoDB" } );
+db.demohelpitems.insertOne( { dh_type: "USERS", dh_text: "Hide these Tips by clicking Get Help button again" } );
+
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Search by all columns data (c)" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Reorder rows by dragging first icon of each row" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Quick preview by mouse-over the 'eye' icon" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Export table to CSV format for Excel by clicking 'Excel'" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Select row by clicking on it. Right-click for context menu" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "In-place editing for Response Status, First and Last name column data" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "To rearrange columns, drag by the column header" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "To resize column, rest the mouse pointer on the header boundary until it becomes a resize pointer, and then drag the boundary" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Live data from Oracle Beta Review Proposals table" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Edit/Delete operations do not propagate to the underlying database, since it is a live Beta data" } );
+db.demohelpitems.insertOne( { dh_type: "REVIEWS", dh_text: "Hide these Tips by clicking Get Help button again" } );
+
+
+db.demohelpitems.find().pretty()
+
+show help
+show databases
+
+db.collection.remove()
+db.collection.drop()
+
