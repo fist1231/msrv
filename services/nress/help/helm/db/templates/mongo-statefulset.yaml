@@ -55,7 +55,7 @@ spec:
             - containerPort: 37336
           volumeMounts:
             - name: help-db-storage
-              mountPath: /storage/help-db
+              mountPath: /storage/help-db/mongo-help
         - name: mongo-sidecar
           image: cvallance/mongo-k8s-sidecar
           env:
