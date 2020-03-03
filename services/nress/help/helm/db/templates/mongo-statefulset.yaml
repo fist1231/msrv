@@ -19,31 +19,36 @@ kind: Service
 metadata:
   name: mongo-help-svc
   labels:
-    name: mongo-help-svc
+    app: mongo-help-svc
 spec:
   ports:
   - port: 27017
     targetPort: 27017
   clusterIP: None
   selector:
+    app: mongo-help-svc
 #    role: mongo
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongo-help-ss
 spec:
+  selector:
+    matchLabels:
+      app: mongo-help-svc # has to match .spec.template.metadata.labels
   serviceName: "mongo-help-svc"
   replicas: 2
   template:
     metadata:
       labels:
+        app: mongo-help-svc # has to match .spec.selector.matchLabels
         role: mongo
         environment: test
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: mongo-help-db
+        - name: mongo-help-svc
           image: mongo
           command:
             - mongod
@@ -51,15 +56,18 @@ spec:
             - rs0
             - "--bind_ip"
             - 0.0.0.0
+            - "--dbpath"
+            - "/var/lib/mongo-help-storage"
           ports:
             - containerPort: 27017
+              name: mongo-help-ss
           volumeMounts:
             - name: help-db-storage
-              mountPath: /mongo-help
+              mountPath: /var/lib/mongo-help-storage
 #        - name: mongo-sidecar
 #          image: cvallance/mongo-k8s-sidecar
 #          env:
-#            - name: MONGO_HELP_SIDECAR_POD_LABELS
+#            - name: MONGO_SIDECAR_POD_LABELS
 #              value: "role=mongo,environment=test"
 ##            - name: KUBERNETES_CLUSTER_DOMAIN
 ##              value: cluster.local
@@ -72,7 +80,7 @@ spec:
         volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: rook-ceph-block
+      storageClassName: "rook-ceph-block"
       resources:
         requests:
-          storage: 110Mi
+          storage: 256Mi
