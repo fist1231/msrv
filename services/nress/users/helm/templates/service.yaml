@@ -15,5 +15,5 @@ spec:
     nodePort: 30333
   # Label keys and values that must match in order to receive traffic for this service.
   selector:
-    run: users-node
+    app: users-node
   type: NodePort

@@ -1,27 +1,23 @@
 # This file is combined service and deployment yaml. No need to run
 # two separate yamls
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    run: users-node
   name: users-node
+  labels:
+    app: users-node
 spec:
   replicas: 3
   selector:
     matchLabels:
-      run: users-node
-  strategy: {}
+      app: users-node
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        run: users-node
+        app: users-node
     spec:
       containers:
-      - image: ubt-master:443/users-node:v1
+      - image: lxc2:443/users-node:v1
         name: users-node
         imagePullPolicy: Always
         resources: {}
-status: {}

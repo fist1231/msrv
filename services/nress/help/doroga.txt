@@ -24,6 +24,9 @@ sudo docker build -t users-node:v1 .
 sudo docker tag users-node:v1 ubt-master:443/users-node:v1
 sudo docker push ubt-master:443/users-node:v1
 
+sudo docker tag users-node:v1 lxc2:443/users-node:v1
+sudo docker push lxc2:443/users-node:v1
+
 K8s:
 ====
 cd  ./config
