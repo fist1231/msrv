@@ -1,2 +1,4 @@
+apiVersion: v1
+description: Users microservice deployment chart
 name: users-node
 version: 1.0.0

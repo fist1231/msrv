@@ -1,0 +1,9 @@
+# Default values for users-node microservice
+# This is a YAML-formatted file.
+# Declare variables to be passed into templates.
+
+image:
+  url: tsa-ubt
+  port: 443
+  version: v1
+ 

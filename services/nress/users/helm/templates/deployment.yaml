@@ -17,7 +17,7 @@ spec:
         app: users-node
     spec:
       containers:
-      - image: lxc2:443/users-node:v1
+      - image: "{{ .Values.image.url }}:{{ .Values.image.port }}/users-node:{{ .Values.image.version }}"
         name: users-node
         imagePullPolicy: Always
         resources: {}
