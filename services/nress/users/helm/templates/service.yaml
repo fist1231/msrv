@@ -7,12 +7,12 @@ metadata:
   name: {{ .Release.Name }}-service
 spec:
   ports:
-  - nodePort: {{ .Values.service.nodePort }}
+  - nodePort: {{ .Values.service.targetPort }}
     # The port that this service should serve on.
     port: {{ .Values.service.port }}
     protocol: TCP
     targetPort: {{ .Values.service.port }}
-    nodePort: {{ .Values.service.nodePort }}
+    nodePort: {{ .Values.service.targetPort }}
   # Label keys and values that must match in order to receive traffic for this service.
   selector:
     app: {{ .Release.Name }}
