@@ -7,7 +7,7 @@ replicaCount: 3
 image:
   url: tsa-ubt
   port: 443
-  tag: latest
+  tag: v3
   imagePullPolicy: IfNotPresent
 
 

@@ -19,7 +19,8 @@ const {
     MONGO_PASSWORD,
     MONGO_HOSTNAME,
     MONGO_PORT,
-    MONGO_DB
+    MONGO_DB,
+    MONGO_REPLICASET
 } = process.env;
 
 const options = {
@@ -30,14 +31,15 @@ const options = {
     connectTimeoutMS: 10000,
 };
 
-const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?replicaSet=${MONGO_REPLICASET}&authSource=${MONGO_DB}`;
 
+mongoose.Promise = global.Promise;
 mongoose.connect(url, options)
     .then(function() {
         console.log('Users Rook-Ceph MongoDB is connected');
     })
     .catch(function(err) {
-        console.log(err);
+        console.log('### Users-Mongo Error: ' + err);
     });
 /** Replaced by auth and env parameters
 
