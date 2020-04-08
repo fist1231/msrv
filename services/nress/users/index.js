@@ -25,7 +25,7 @@ const {
 
 const options = {
     useNewUrlParser: true,
-    useMongoClient: true,
+    // useMongoClient: true,
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 500,
     connectTimeoutMS: 10000,

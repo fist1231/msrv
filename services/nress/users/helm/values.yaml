@@ -7,11 +7,12 @@ replicaCount: 3
 image:
   url: tsa-ubt
   port: 443
-  tag: v3
+  tag: v4
   imagePullPolicy: IfNotPresent
 
 
 service:
-  type: NodePort
   port: 3333
-  targetPort: 30333  
+  targetPort: 30333
+  type: NodePort
+  
