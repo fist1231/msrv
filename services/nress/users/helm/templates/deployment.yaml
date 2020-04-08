@@ -3,21 +3,52 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-node
+  name: {{ .Release.Name }}
   labels:
-    app: users-node
+    app: {{ .Release.Name }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: users-node
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: users-node
+        app: {{ .Release.Name }}
     spec:
       containers:
-      - image: "{{ .Values.image.url }}:{{ .Values.image.port }}/users-node:{{ .Values.image.version }}"
-        name: users-node
-        imagePullPolicy: Always
+      - image: "{{ .Values.image.url }}:{{ .Values.image.port }}/{{ .Release.Name }}:{{ .Values.image.tag }}"
+        name: {{ .Release.Name }}
+        imagePullPolicy: {{ .Values.image.imagePullPolicy }}
+        env:
+        - name: MONGO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_USERNAME
+              name: {{ .Release.Name }}-auth
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_PASSWORD
+              name: {{ .Release.Name }}-auth
+        - name: MONGO_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              key: MONGO_HOSTNAME
+              name: {{ .Release.Name }}-config
+        - name: MONGO_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: MONGO_PORT
+              name: {{ .Release.Name }}-config
+        - name: MONGO_DB
+          valueFrom:
+            configMapKeyRef:
+              key: MONGO_DB
+              name: {{ .Release.Name }}-config      
+        - name: MONGO_REPLICASET
+          valueFrom:
+            configMapKeyRef:
+              key: MONGO_REPLICASET
+              name: {{ .Release.Name }}-config           
         resources: {}

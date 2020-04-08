@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-help-svc
+  labels:
+    app: mongo-help-svc
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    role: mongo
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo-help-ss
+spec:
+  selector:
+    matchLabels:
+      app: mongo-help-app # has to match .spec.template.metadata.labels
+  serviceName: "mongo-help-svc"
+  replicas: 3 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: mongo-help-app # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mongo-help-db
+        image: mongo
+        command:
+          - mongod
+          - "--replSet"
+          - rs0
+          - "--smallfiles"
+          - "--noprealloc"
+        ports:
+        - containerPort: 37336
+          name: mongo-help-ss 
+        volumeMounts:
+        - name: help-db-storage
+          mountPath: /storage/help-db/mongo-help
+      - name: mongo-sidecar
+        image: cvallance/mongo-k8s-sidecar
+        env:
+          - name: MONGO_HELP_SIDECAR_POD_LABELS
+            value: "role=mongo,environment=test"          
+  volumeClaimTemplates:
+  - metadata:
+      name: help-db-storage
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "mongo-help-sc"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Mi

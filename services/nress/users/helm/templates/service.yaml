@@ -2,18 +2,18 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: users-node
-    name: users-node-service
-  name: users-node-service
+    run: {{ .Release.Name }}
+    name: {{ .Release.Name }}-service
+  name: {{ .Release.Name }}-service
 spec:
   ports:
-  - nodePort: 30333
+  - nodePort: {{ .Values.service.nodePort }}
     # The port that this service should serve on.
-    port: 3333
+    port: {{ .Values.service.port }}
     protocol: TCP
-    targetPort: 3333
-    nodePort: 30333
+    targetPort: {{ .Values.service.port }}
+    nodePort: {{ .Values.service.nodePort }}
   # Label keys and values that must match in order to receive traffic for this service.
   selector:
-    app: users-node
-  type: NodePort
+    app: {{ .Release.Name }}
+  type: {{ .Values.service.type }}

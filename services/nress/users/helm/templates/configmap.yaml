@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  MONGO_HOSTNAME: "users-mongo-mongodb-replicaset-0.users-mongo-mongodb-replicaset.default.svc.cluster.local,users-mongo-mongodb-replicaset-1.users-mongo-mongodb-replicaset.default.svc.cluster.local"  
+  MONGO_PORT: "27017"
+  MONGO_DB: "nress_db"
+  MONGO_REPLICASET: "rs0"

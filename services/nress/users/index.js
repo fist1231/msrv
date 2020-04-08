@@ -5,14 +5,41 @@ var Rx = require('rxjs');
 var cors = require('cors');
 var express = require('express'),
 
-app = express(),
-  port = process.env.PORT || 3333,
-  mongoose = require('mongoose'),
-  Users = require('./api/models/usersModel'), //created model loading here
-  bodyParser = require('body-parser');
+    app = express(),
+    port = process.env.PORT || 3333,
+    mongoose = require('mongoose'),
+    Users = require('./api/models/usersModel'), //created model loading here
+    bodyParser = require('body-parser');
 
 app.use(cors());
 
+
+const {
+    MONGO_USERNAME,
+    MONGO_PASSWORD,
+    MONGO_HOSTNAME,
+    MONGO_PORT,
+    MONGO_DB
+} = process.env;
+
+const options = {
+    useNewUrlParser: true,
+    useMongoClient: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 500,
+    connectTimeoutMS: 10000,
+};
+
+const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+
+mongoose.connect(url, options)
+    .then(function() {
+        console.log('Users Rook-Ceph MongoDB is connected');
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
+/** Replaced by auth and env parameters
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
@@ -28,7 +55,7 @@ mongoose.connect(config.db_connect, {
   //         }
   
 });
-
+**/
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,18 +74,16 @@ app.listen(port);
 
 exports.getUsers = function() {
 
-	var users = [{id: '101', name: 'name-1010', status: 'fake', created_date: new Date()}
-	, {id: '102', name: 'name-102', status: 'fake', created_date: new Date()}
-	, {id: '103', name: 'name-103', status: 'fake', created_date: new Date()}];
+    var users = [{ id: '101', name: 'name-1010', status: 'fake', created_date: new Date() }, { id: '102', name: 'name-102', status: 'fake', created_date: new Date() }, { id: '103', name: 'name-103', status: 'fake', created_date: new Date() }];
 
 
-	app.get('/dowork',function(res,req){
-	    console.log(req.params.msg);
-	  /... code to do your work .../
-	});
+    app.get('/dowork', function(res, req) {
+        console.log(req.params.msg);
+        /... code to do your work .../
+    });
 
 
-	return Rx.Observable.of(users);
+    return Rx.Observable.of(users);
 }
 
 
