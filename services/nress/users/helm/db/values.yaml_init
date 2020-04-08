@@ -1,7 +1,6 @@
 # Override the name of the chart, which in turn changes the name of the containers, services etc.
 nameOverride: ""
 fullnameOverride: ""
-serviceName: mongo-users-svc
 
 # Override the deployment namespace
 # global:
@@ -142,7 +141,7 @@ persistentVolume:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "rook-ceph-block"
+  # storageClass: ""
   accessModes:
     - ReadWriteOnce
   size: 256Mi
@@ -196,4 +195,3 @@ livenessProbe:
   failureThreshold: 3
   periodSeconds: 10
   successThreshold: 1
-
