@@ -84,6 +84,17 @@ exports.update_a_user = function(req, res) {
   });
 };
 
+exports.test = function(req, res) {
+  console.log(`Test endpoint for users engaged`);
+  res.json(`test wtfh`);
+}
+
+exports.testUsers = (req, res) => {
+  console.log(`Test endpoint for users engaged`);
+  res.send('<b>Tets me</b> qwerqwerqwer qwerqwerqw');
+  // res.json(`test users with`);
+}
+
 /*
 exports.update_a_user = function(req, res) {
   console.log('update_a_user call: id='+ req.params.userId);

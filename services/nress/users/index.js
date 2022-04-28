@@ -34,13 +34,13 @@ const options = {
 const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?replicaSet=${MONGO_REPLICASET}&authSource=${MONGO_DB}`;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(url, options)
-    .then(function() {
-        console.log('Users Rook-Ceph MongoDB is connected');
-    })
-    .catch(function(err) {
-        console.log('### Users-Mongo Error: ' + err);
-    });
+// mongoose.connect(url, options)
+//     .then(function() {
+//         console.log('Users Rook-Ceph MongoDB is connected');
+//     })
+//     .catch(function(err) {
+//         console.log('### Users-Mongo Error: ' + err);
+//     });
 /** Replaced by auth and env parameters
 
 // mongoose instance connection url connection

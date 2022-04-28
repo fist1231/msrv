@@ -24,6 +24,11 @@ module.exports = function(app) {
   app.route('/nress/user/:userId')
   .get(usersList.find_user);
 
+  app.route('/nress/test')
+  .get(usersList.test);
+
+  app.route('/nress/testUsers')
+  .get(usersList.testUsers);
 
 // app.route('/nress/users/filter')
 // .get(usersList.list_all_users);
