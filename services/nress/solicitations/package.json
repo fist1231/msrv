@@ -36,7 +36,7 @@
     "babel-preset-es3": "^1.0.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
-    "chai-http": "^3.0.0",
+    "chai-http": "^4.3.0",
     "chai-subset": "^1.6.0",
     "graphql-tools": "^2.16.0",
     "mocha": "^4.1.0",
